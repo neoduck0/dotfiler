@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+file="/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode"
+
+if [ ! -f $file ]; then
+    echo "File does not exist."
+    exit 1
+fi
+
+if [ $(sudo cat $file) -eq 0 ]; then
+    old_status=disabled
+    new_mode=1
+else
+    old_status=enabled
+    new_mode=0
+fi
+
+echo $new_mode | sudo tee $file > /dev/null
+
+if [ $(sudo cat $file) -eq 0 ]; then
+    new_status=disabled
+else
+    new_status=enabled
+fi
+
+echo "$old_status -> $new_status"

@@ -1,0 +1,10 @@
+{
+    "telemetry.feedback.enabled": false,
+    "telemetry.telemetryLevel": "off",
+    "telemetry.editStats.enabled": false,
+    "workbench.startupEditor": "none",
+    "window.controlsStyle": "hidden",
+    "workbench.colorTheme": "Tokyo Night",
+    "editor.lineNumbers": "relative",
+    "explorer.confirmDelete": false
+}

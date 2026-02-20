@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+    echo "Usage: $(basename "$0") <input.pdf>"
+    echo "Removes all annotations from a PDF file."
+    echo ""
+    echo "Arguments:"
+    echo "  <input.pdf>    Input PDF file to remove annotations from"
+    exit 1
+}
+
+if [[ $# -ne 1 ]]; then
+    usage
+fi
+
+input_file="$1"
+
+if [[ ! -f "$input_file" ]]; then
+    echo "Error: File '$input_file' not found." >&2
+    exit 1
+fi
+
+if ! command -v pdftk &> /dev/null; then
+    echo "Error: pdftk is not installed." >&2
+    exit 1
+fi
+
+output_file="${input_file%.pdf}_no_annots.pdf"
+
+pdftk "$input_file" output - uncompress | sed '/^\/Annots/d' | pdftk - output "$output_file" compress
+
+echo "Output saved to: $output_file"

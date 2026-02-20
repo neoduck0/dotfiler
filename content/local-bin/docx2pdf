@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+
+import argparse
+import shutil
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+
+def convert_docx_to_pdf(input_path: Path, output_dir: Path) -> bool:
+    output_path = output_dir / (input_path.stem + ".pdf")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_input = Path(tmpdir) / input_path.name
+        shutil.copy2(input_path, tmp_input)
+        subprocess.run(
+            [
+                "soffice",
+                "--headless",
+                "--convert-to",
+                "pdf",
+                "--outdir",
+                tmpdir,
+                str(tmp_input),
+            ],
+            check=True,
+            capture_output=True,
+        )
+        tmp_output = Path(tmpdir) / (input_path.stem + ".pdf")
+        if tmp_output.exists():
+            shutil.copy2(tmp_output, output_path)
+            return True
+    return False
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Convert DOCX files to PDF")
+    parser.add_argument("files", nargs="+", type=Path, help="DOCX file(s) to convert")
+    args = parser.parse_args()
+
+    output_dir = Path.cwd()
+    converted = []
+    failed = []
+
+    for file in args.files:
+        file = file.expanduser().resolve()
+        if file.suffix.lower() != ".docx":
+            print(f"Skipping {file.name}: not a .docx file", file=sys.stderr)
+            continue
+        if not file.exists():
+            print(f"Skipping {file.name}: file not found", file=sys.stderr)
+            failed.append((file.name, "file not found"))
+            continue
+        print(f"Converting: {file.name} -> {file.stem}.pdf")
+        try:
+            if convert_docx_to_pdf(file, output_dir):
+                converted.append(file.name)
+            else:
+                failed.append((file.name, "conversion failed"))
+        except Exception as e:
+            print(f"Error converting {file.name}: {e}", file=sys.stderr)
+            failed.append((file.name, str(e)))
+
+    print(f"\nConverted: {len(converted)}/{len(args.files)}")
+    if failed:
+        print("Failed:", [f"{n}: {e}" for n, e in failed])
+
+
+if __name__ == "__main__":
+    main()

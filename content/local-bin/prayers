@@ -1,0 +1,178 @@
+#!/usr/bin/env python3
+
+import json
+import os
+import sys
+from urllib import request
+from datetime import datetime
+from pathlib import Path
+
+prayers = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"]
+
+SETTINGS_DIR = Path.home() / ".config" / "prayers"
+SETTINGS_FILE = SETTINGS_DIR / "settings.json"
+
+latitude = None
+longitude = None
+
+
+def load_settings():
+    global latitude, longitude
+    if SETTINGS_FILE.exists():
+        with open(SETTINGS_FILE) as f:
+            data = json.load(f)
+            latitude = data.get("latitude")
+            longitude = data.get("longitude")
+
+
+def save_settings(lat, lon):
+    SETTINGS_DIR.mkdir(parents=True, exist_ok=True)
+    with open(SETTINGS_FILE, "w") as f:
+        json.dump({"latitude": lat, "longitude": lon}, f)
+
+
+def get_input(prompt, min_val, max_val, default=None):
+    while True:
+        value = input(prompt).strip()
+        if not value:
+            if default is not None:
+                return default
+            continue
+        try:
+            num = float(value)
+            if num < min_val or num > max_val:
+                print(f"Invalid: {value} (must be between {min_val} and {max_val})")
+                continue
+            return num
+        except ValueError:
+            print(f"Invalid: {value} (must be a number)")
+
+
+def config_show():
+    if SETTINGS_FILE.exists():
+        with open(SETTINGS_FILE) as f:
+            current = json.load(f)
+        print(f"Latitude: {current.get('latitude')}")
+        print(f"Longitude: {current.get('longitude')}")
+    else:
+        print("No settings configured.")
+
+
+def config_interactive():
+    current_lat = None
+    current_lon = None
+    if SETTINGS_FILE.exists():
+        with open(SETTINGS_FILE) as f:
+            current = json.load(f)
+            current_lat = current.get("latitude")
+            current_lon = current.get("longitude")
+
+    lat_example = f"{current_lat}" if current_lat is not None else "e.g. 40.71"
+    lon_example = f"{current_lon}" if current_lon is not None else "e.g. -74.00"
+
+    lat = get_input(f"Latitude ({lat_example}): ", -90, 90, current_lat)
+    lon = get_input(f"Longitude ({lon_example}): ", -180, 180, current_lon)
+
+    save_settings(lat, lon)
+    print("Settings saved.")
+
+
+def main():
+    load_settings()
+
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "config":
+            if len(sys.argv) > 2:
+                if sys.argv[2] == "show":
+                    config_show()
+                else:
+                    print(f"Unknown option: {sys.argv[2]}")
+                return
+            config_interactive()
+            return
+        elif sys.argv[1] == "waybar":
+            pass
+        elif sys.argv[1] == "show":
+            pass
+        else:
+            print(f"Unknown option: {sys.argv[1]}")
+            return
+
+    if latitude is None or longitude is None:
+        print("Run 'prayers config' to set location.")
+        return
+
+    now_date = datetime.now().strftime("%d-%m-%Y")
+
+    try:
+        url = f"https://api.aladhan.com/v1/timings/{now_date}?latitude={latitude}&longitude={longitude}&method=1&fajr=20&isha=18"
+        with request.urlopen(url) as response:
+            data = json.loads(response.read().decode("utf-8"))["data"]
+            global timings
+            timings = data["timings"]
+
+    except Exception as e:
+        if len(sys.argv) > 1 and sys.argv[1] == "waybar":
+            return
+        print(f"Error: {e}")
+        return
+
+    if len(sys.argv) > 1 and sys.argv[1] == "waybar":
+        print(waybar())
+        return
+
+    if len(sys.argv) > 1 and sys.argv[1] == "show":
+        print(all_prayers())
+        return
+
+    print(all_prayers())
+
+
+def all_prayers() -> str:
+    return_str = ""
+    for prayer in prayers:
+        return_str += f"{prayer}: {timings[prayer]}\n"
+    return return_str.strip()
+
+
+def waybar() -> str:
+    now = datetime.now()
+    current_time = now.strftime("%H:%M")
+
+    prev_prayer = None
+    prev_time = None
+    next_prayer = None
+    next_time = None
+
+    waybar_prayers = [p for p in prayers if p != "Sunrise"]
+    for prayer in waybar_prayers:
+        prayer_time = timings[prayer][:5]
+        if prayer_time > current_time:
+            next_prayer = prayer
+            next_time = prayer_time
+            break
+        prev_prayer = prayer
+        prev_time = prayer_time
+
+    if prev_prayer is None:
+        return f"{prayers[0]} {timings[prayers[0]]}"
+
+    if next_prayer is None:
+        return f"{prev_prayer} {timings[prev_prayer]}"
+
+    def time_diff(t1, t2):
+        fmt = "%H:%M"
+        return abs(
+            (datetime.strptime(t2, fmt) - datetime.strptime(t1, fmt)).total_seconds()
+        )
+
+    prev_diff = time_diff(current_time, prev_time)
+    next_diff = time_diff(next_time, current_time)
+
+    if prev_diff <= next_diff:
+        return f"{prev_prayer} {timings[prev_prayer]}"
+    return f"{next_prayer} {timings[next_prayer]}"
+
+
+if __name__ == "__main__":
+    main()

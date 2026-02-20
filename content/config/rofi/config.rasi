@@ -1,0 +1,48 @@
+* {
+    /* Theme settings */
+    highlight: bold italic;
+    scrollbar: true;
+
+    /* Tokyo Night Storm colors */
+    tokyonight-bg:           #1a1b26;
+    tokyonight-bg1:          #24283b;
+    tokyonight-bg2:          #292e42;
+    tokyonight-fg:           #a9b1d6;
+    tokyonight-red:          #f7768e;
+    tokyonight-green:        #9ece6a;
+    tokyonight-yellow:       #e0af68;
+    tokyonight-blue:         #7aa2f7;
+    tokyonight-magenta:      #bb9af7;
+    tokyonight-cyan:         #7dcfff;
+
+    /* Theme colors */
+    background:                  @tokyonight-bg;
+    background-color:            @background;
+    foreground:                  @tokyonight-fg;
+    border-color:                @foreground;
+    separatorcolor:              @border-color;
+    scrollbar-handle:            @border-color;
+
+    normal-background:           @background;
+    normal-foreground:           @foreground;
+    alternate-normal-background: @background;
+    alternate-normal-foreground: @foreground;
+    selected-normal-background:  @tokyonight-bg2;
+    selected-normal-foreground:  @tokyonight-blue;
+
+    active-background:           @tokyonight-green;
+    active-foreground:           @tokyonight-bg;
+    alternate-active-background: @active-background;
+    alternate-active-foreground: @active-foreground;
+    selected-active-background:  @tokyonight-green;
+    selected-active-foreground:  @active-foreground;
+
+    urgent-background:           @tokyonight-red;
+    urgent-foreground:           @tokyonight-bg;
+    alternate-urgent-background: @urgent-background;
+    alternate-urgent-foreground: @urgent-foreground;
+    selected-urgent-background:  @tokyonight-red;
+    selected-urgent-foreground:  @urgent-foreground;
+}
+
+@import "tokyonight-common"

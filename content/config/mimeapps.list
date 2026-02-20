@@ -1,0 +1,31 @@
+[Default Applications]
+image/png=org.gnome.Loupe.desktop
+video/x-matroska=mpv.desktop
+application/pdf=org.gnome.Papers.desktop
+video/mp4=mpv.desktop
+audio/mp4=io.bassi.Amberol.desktop
+inode/directory=org.gnome.Nautilus.desktop
+x-scheme-handler/http=helium.desktop
+x-scheme-handler/https=helium.desktop
+video/webm=mpv.desktop
+image/jpeg=org.gnome.Loupe.desktop
+audio/mpeg=io.bassi.Amberol.desktop
+text/markdown=nvim.desktop
+text/html=helium.desktop
+x-scheme-handler/about=helium.desktop
+x-scheme-handler/unknown=helium.desktop
+application/vnd.efi.iso=gnome-disk-image-writer.desktop
+
+[Added Associations]
+image/png=org.gnome.Loupe.desktop;
+video/x-matroska=mpv.desktop;
+application/pdf=org.gnome.Papers.desktop;
+video/mp4=mpv.desktop;
+audio/mp4=io.bassi.Amberol.desktop;
+x-scheme-handler/http=firefox.desktop;
+x-scheme-handler/https=firefox.desktop;
+video/webm=mpv.desktop;
+image/jpeg=org.gnome.Loupe.desktop;
+audio/mpeg=io.bassi.Amberol.desktop;
+text/markdown=code-oss.desktop;nvim.desktop;
+application/vnd.efi.iso=gnome-disk-image-writer.desktop;

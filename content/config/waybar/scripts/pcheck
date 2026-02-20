@@ -1,0 +1,152 @@
+#!/bin/python
+
+import subprocess
+import sys
+import json
+import os
+from pathlib import Path
+
+
+def get_unlogged_packages():
+    pkgs_file = os.environ.get("PKGS_FILE", "")
+    if not pkgs_file:
+        return None
+    pkgs_path = Path(pkgs_file)
+    if not pkgs_path.exists():
+        return None
+    try:
+        result = subprocess.run(
+            ["python", str(pkgs_path), "diff"],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        return result.stdout.strip() if result.stdout.strip() else None
+    except Exception:
+        return None
+
+_repo = None
+_aur = None
+_flatpak = None
+
+
+def get_repo_updates():
+    try:
+        result = subprocess.run(
+            ["checkupdates"],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        if result.returncode == 0 or result.stdout:
+            return (
+                len(result.stdout.strip().split("\n")) if result.stdout.strip() else 0
+            )
+        return 0
+    except FileNotFoundError:
+        try:
+            result = subprocess.run(
+                ["pacman", "-Qu"],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            return (
+                len([l for l in result.stdout.strip().split("\n") if l])
+                if result.stdout.strip()
+                else 0
+            )
+        except Exception:
+            return -1
+    except Exception:
+        return -1
+
+
+def get_aur_updates():
+    try:
+        result = subprocess.run(
+            ["yay", "-Qua"],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        return len(result.stdout.strip().split("\n")) if result.stdout.strip() else 0
+    except Exception:
+        return -1
+
+
+def get_flatpak_updates():
+    try:
+        result = subprocess.run(
+            ["flatpak", "remote-ls", "--updates"],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        if result.stdout.strip():
+            return len(result.stdout.strip().split("\n"))
+    except Exception:
+        pass
+    try:
+        result = subprocess.run(
+            ["flatpak", "list", "--updates"],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        return len(result.stdout.strip().split("\n")) if result.stdout.strip() else 0
+    except Exception:
+        return -1
+
+
+def fetch_updates():
+    global _repo, _aur, _flatpak
+    _repo = get_repo_updates()
+    _aur = get_aur_updates()
+    _flatpak = get_flatpak_updates()
+
+
+def waybar():
+    icon = "󰏔"
+
+    def fmt(val):
+        return "Error" if val < 0 else val
+
+    total = sum(v for v in [_repo, _aur, _flatpak] if v > 0)
+    unlogged = get_unlogged_packages()
+
+    tooltip_parts = [
+        "Updates",
+        f"Repo: {fmt(_repo)}",
+        f"Aur: {fmt(_aur)}",
+        f"Flatpak: {fmt(_flatpak)}",
+    ]
+    if unlogged:
+        tooltip_parts.extend(["", "Unlogged", unlogged])
+
+    output = {
+        "text": f"{icon} {total}",
+        "tooltip": "\n".join(tooltip_parts),
+    }
+    if unlogged:
+        output["class"] = "unlogged"
+
+    return json.dumps(output)
+
+
+def main():
+    fetch_updates()
+
+    if len(sys.argv) > 1 and sys.argv[1] == "waybar":
+        print(waybar())
+        return
+
+    def fmt(val):
+        return "Error" if val < 0 else val
+
+    parts = [f"Repo: {fmt(_repo)}", f"Aur: {fmt(_aur)}", f"Flatpak: {fmt(_flatpak)}"]
+    print("\n".join(parts))
+
+
+if __name__ == "__main__":
+    main()

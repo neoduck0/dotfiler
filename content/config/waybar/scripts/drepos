@@ -1,0 +1,75 @@
+#!/bin/python
+
+import os
+import subprocess
+import sys
+import json
+
+PROJECTS_DIR = os.path.expanduser("~/Projects/")
+
+
+def _has_git_work(repo_path):
+    try:
+        result = subprocess.run(
+            ["git", "status", "--porcelain"],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.stdout.strip():
+            return True
+
+        result = subprocess.run(
+            ["git", "log", "@{u}..", "--oneline"],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.stdout.strip():
+            return True
+
+        return False
+    except Exception:
+        return False
+
+
+def waybar():
+    repos = repositories()
+    count = len(repos)
+    if count == 0:
+        return json.dumps({"text": " " + str(count)})
+    return json.dumps(
+        {
+            "text": " " + str(count),
+            "tooltip": "\n".join(repos),
+            "class": "dirty",
+        }
+    )
+
+
+def repositories():
+    result = []
+    if not os.path.isdir(PROJECTS_DIR):
+        return result
+
+    for entry in os.listdir(PROJECTS_DIR):
+        repo_path = os.path.join(PROJECTS_DIR, entry)
+        if os.path.isdir(repo_path) and os.path.isdir(os.path.join(repo_path, ".git")):
+            if _has_git_work(repo_path):
+                result.append(entry)
+
+    return result
+
+
+def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "waybar":
+        print(waybar())
+    else:
+        for repo in repositories():
+            print(repo)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! command -v bluetoothctl &>/dev/null; then
+    exit 1
+fi
+
+cur=$(bluetoothctl show 2>/dev/null | grep Powered | cut -f 2 -d : | xargs)
+
+if [ $cur == yes ]; then
+    old_status=on
+    bluetoothctl power off &>/dev/null
+    new_status=off
+elif [ $cur == no ]; then
+    old_status=off
+    bluetoothctl power on &>/dev/null
+    new_status=on
+fi
+
+echo "$old_status -> $new_status"

@@ -1,0 +1,204 @@
+// -*- mode: jsonc -*-
+{
+    "layer": "bottom",
+    "position": "top",
+    "height": 34,
+    "spacing": 20,
+    "modules-left": [
+        "hyprland/workspaces",
+        "custom/drepos",
+        "custom/pcheck",
+        "custom/ctodos",
+        "wlr/taskbar",
+        "hyprland/submap"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "tray",
+        "hyprland/language",
+        "privacy",
+        "power-profiles-daemon",
+        "idle_inhibitor",
+        "memory",
+        "cpu",
+        "backlight",
+        "battery",
+        "wireplumber",
+        "bluetooth",
+        "network",
+        "custom/power"
+    ],
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "urgent": "",
+            "active": "",
+            "default": ""
+        }
+    },
+    "custom/drepos": {
+        "exec": "drepos waybar",
+        "interval": 60,
+        "return-type": "json",
+        "format": "{text}"
+    },
+    "custom/pcheck": {
+        "exec": "pcheck waybar",
+        "interval": 60,
+        "return-type": "json",
+        "format": "{text}"
+    },
+    "custom/ctodos": {
+        "exec": "ctodos",
+        "interval": 60,
+        "return-type": "json",
+        "format": "{text}"
+    },
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 12,
+        "tooltip": false,
+        "all-outputs": true
+    },
+    "hyprland/submap": {
+        "format": "{}",
+        "tooltip": false
+    },
+    "clock": {
+        "format": "{:%a %d/%m %H:%M:%S}",
+        "tooltip": false,
+        "interval": 1
+    },
+    "custom/prayers": {
+        "exec": "prayers waybar",
+        "interval": 60,
+        "return-type": "text",
+        "format": "({})"
+    },
+    "tray": {
+        "icon-size": 12
+    },
+    "hyprland/language": {
+        "format": "{}",
+        "format-en": "en",
+        "format-ar": "ar"
+    },
+    "privacy": {
+        "icon-size": 12,
+        "icon-spacing": 20,
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": false
+            },
+            {
+                "type": "audio-in",
+                "tooltip": false
+            }
+        ]
+    },
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "format-icons": {
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        },
+        "tooltip": false
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        },
+        "tooltip": false
+    },
+    "memory": {
+        "format": "{}% ",
+        "tooltip-format": "Swap: {swapPercentage}%",
+        "interval": 5
+    },
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false,
+        "interval": 5
+    },
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "tooltip": false
+    },
+    "battery": {
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "tooltip-format": "Health: {health}%",
+        "states": {
+            "warning": 30,
+            "critical": 20
+        },
+        "interval": 1
+    },
+    "wireplumber": {
+        "format": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": [
+            "",
+            "",
+            ""
+        ],
+        "max-volume": 150,
+        "tooltip": false,
+        "on-click": "pavucontrol"
+    },
+    "bluetooth": {
+        "format": "",
+        "format-on": "",
+        "format-connected": "{device_battery_percentage}% ",
+        "format-no-controller": "",
+        "tooltip-format-connected": "{device_alias}"
+        // "on-click": "rfkill toggle bluetooth"
+    },
+    "network": {
+        "format": "",
+        "format-disconnected": "",
+        "format-ethernet": "",
+        "format-wifi": "{signalStrength}% ",
+        "tooltip-format": "{essid}",
+        // "on-click": "rfkill toggle wifi",
+        "interval": 10
+    },
+    "custom/power": {
+        "format" : "",
+        "tooltip": false,
+        "menu": "on-click",
+        "menu-file": "$HOME/.config/waybar/power_menu.xml",
+        "menu-actions": {
+            "logout": "hyprctl dispatch exit",
+            "shutdown": "shutdown",
+            "reboot": "reboot",
+            "suspend": "systemctl suspend",
+            "hibernate": "systemctl hibernate"
+        }
+    }
+}

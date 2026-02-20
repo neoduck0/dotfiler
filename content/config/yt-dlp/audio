@@ -1,0 +1,3 @@
+--extract-audio
+--audio-format opus
+--audio-quality 0

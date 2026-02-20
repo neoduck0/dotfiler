@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# hyprshot - Screenshot script for Hyprland
+# Requirements: grim, slurp, hyprpicker, wl-copy, jq, hyprctl
+
+SCREENSHOTS_DIR="$HOME/Pictures/Screenshots"
+
+check_deps() {
+    for cmd in grim slurp hyprpicker wl-copy jq hyprctl; do
+        command -v "$cmd" >/dev/null 2>&1 || {
+            echo "Error: '$cmd' is not installed"
+            exit 1
+        }
+    done
+}
+
+usage() {
+    cat <<EOF
+Usage: hyprshot <command>
+
+Commands:
+  screen   - Take a screenshot of the entire screen
+  region   - Select an area to screenshot with slurp
+EOF
+}
+
+take_screenshot() {
+    local file="$SCREENSHOTS_DIR/$(date +%Y%m%d_%H%M%S).png"
+    mkdir -p "$SCREENSHOTS_DIR"
+    grim "$@" "$file"
+    wl-copy <"$file"
+}
+
+check_deps
+
+case "${1:-}" in
+screen)
+    output=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')
+    take_screenshot -o "$output"
+    ;;
+region)
+    hyprpicker -rz &
+    sleep 0.2
+    take_screenshot -g "$(slurp -c 00000000 -b 00000080)"
+    pkill hyprpicker
+    ;;
+*)
+    usage
+    ;;
+esac
