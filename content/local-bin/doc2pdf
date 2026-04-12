@@ -44,7 +44,7 @@ def main():
 
     for file in args.files:
         file = file.expanduser().resolve()
-        if file.suffix.lower() != ".docx":
+        if file.suffix.lower() not in [".docx", ".doc"]:
             print(f"Skipping {file.name}: not a .docx file", file=sys.stderr)
             continue
         if not file.exists():
