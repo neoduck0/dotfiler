@@ -17,7 +17,7 @@ vim.wo.relativenumber = true
 
 vim.o.wrap = false
 
-vim.o.spell = true
+vim.o.spell = false
 vim.o.spelllang = "en_us"
 
 vim.o.smoothscroll = true
