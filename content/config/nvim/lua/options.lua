@@ -21,3 +21,5 @@ vim.o.spell = true
 vim.o.spelllang = "en_us"
 
 vim.o.smoothscroll = true
+
+vim.o.colorcolumn = "80"
