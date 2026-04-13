@@ -21,7 +21,6 @@ vim.keymap.set("n", "<leader>fd", function() Snacks.picker.diagnostics_buffer() 
 vim.keymap.set("n", "<leader>ff", function() Snacks.picker.files() end)
 vim.keymap.set("n", "<leader>fh", function() Snacks.picker.help() end)
 vim.keymap.set("n", "<leader>fp", function() Snacks.picker.projects() end)
-vim.keymap.set("n", "<leader>ft", function() Snacks.picker.todo_comments() end)
 vim.keymap.set("n", "<leader>fg", function() Snacks.picker.git_status() end)
 
 
