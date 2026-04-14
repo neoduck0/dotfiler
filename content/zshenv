@@ -6,3 +6,6 @@ export ZDOTDIR=~/.config/zsh
 export TODO_FILE=~/Cloud/todo.md
 export PYTHON_HISTORY=/dev/null
 export PKGS_FILE=~/Projects/dotfiles/content/local-bin/pkgs
+
+export THEMES_DIR=~/Projects/dotfiler/content/themes/
+export ICONS_DIR=~/Projects/dotfiler/content/icons/
