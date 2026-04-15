@@ -12,6 +12,7 @@ func main() {
 	initDirs()
 	readMappings()
 
+	fmt.Println()
 	for _, e := range groups {
 		fmt.Println("Info: Symlinking group " + e.name + ".")
 		for _, m := range e.mappings {
