@@ -21,34 +21,34 @@ func main() {
 	}
 }
 
-const MAPPINGS_FILE string = "mappings.conf"
+const mappingsFile string = "mappings.conf"
 
 var (
-	home_dir    string
-	content_dir string
-	groups      []*Group
+	homeDir    string
+	contentDir string
+	groups     []*Group
 )
 
 func initDirs() {
-	home_dir = os.Getenv("HOME")
+	homeDir = os.Getenv("HOME")
 
 	wd, err := os.Getwd()
 	check(err)
-	content_dir = wd + "/content"
+	contentDir = wd + "/content"
 }
 
 func readMappings() {
-	file_bytes, err := os.ReadFile(MAPPINGS_FILE)
+	fileBytes, err := os.ReadFile(mappingsFile)
 	check(err)
-	file_slice := strings.Split(string(file_bytes), "\n")
-	file_slice = slices.DeleteFunc(file_slice, func(line string) bool {
+	fileSlice := strings.Split(string(fileBytes), "\n")
+	fileSlice = slices.DeleteFunc(fileSlice, func(line string) bool {
 		if line == "" {
 			return true
 		}
 		return false
 	})
 
-	get_line_type := func(line string) string {
+	getLineType := func(line string) string {
 		if strings.Contains(line, "#") {
 			return "group"
 		} else if strings.Contains(line, ":") {
@@ -61,30 +61,30 @@ func readMappings() {
 	}
 
 	var group *Group
-	for _, line := range file_slice {
-		var line_type string
-		line_type = get_line_type(line)
+	for _, line := range fileSlice {
+		var lineType string
+		lineType = getLineType(line)
 
-		if line_type == "group" {
+		if lineType == "group" {
 			line = strings.Trim(line, "#")
 			group = &Group{name: strings.TrimSpace(line)}
 			groups = append(groups, group)
 		}
 
-		if line_type == "mapping" {
+		if lineType == "mapping" {
 			if group.name == "" {
 				fmt.Println("Error: Mapping without a group.")
 				os.Exit(1)
 			}
 
-			var line_split [2]string = [2]string(strings.Split(line, ":"))
+			var lineArr [2]string = [2]string(strings.Split(line, ":"))
 
-			line_split[0] = strings.TrimSpace(line_split[0])
-			line_split[1] = strings.TrimSpace(line_split[1])
+			lineArr[0] = strings.TrimSpace(lineArr[0])
+			lineArr[1] = strings.TrimSpace(lineArr[1])
 
 			mapping := &Mapping{
-				src:  content_dir + "/" + line_split[0],
-				dest: strings.ReplaceAll(line_split[1], "~", home_dir),
+				src:  contentDir + "/" + lineArr[0],
+				dest: strings.ReplaceAll(lineArr[1], "~", homeDir),
 			}
 
 			group.mappings = append(group.mappings, mapping)
@@ -103,10 +103,10 @@ type Mapping struct {
 }
 
 func (m Mapping) createSymlink() {
-	file_info, err := os.Stat(m.src)
+	fileInfo, err := os.Stat(m.src)
 	check(err)
 
-	if !(file_info.IsDir()) {
+	if !(fileInfo.IsDir()) {
 		err = os.MkdirAll(filepath.Dir(m.dest), 0o755)
 		if !os.IsExist(err) {
 			check(err)
@@ -120,14 +120,14 @@ func (m Mapping) createSymlink() {
 		return
 	}
 
-	dir_files, err := os.ReadDir(m.src)
+	dirFile, err := os.ReadDir(m.src)
 	check(err)
-	for _, file := range dir_files {
-		var new_m Mapping = Mapping{
+	for _, file := range dirFile {
+		var newMapping Mapping = Mapping{
 			src:  m.src + "/" + file.Name(),
 			dest: m.dest + "/" + file.Name(),
 		}
-		new_m.createSymlink()
+		newMapping.createSymlink()
 	}
 }
 
