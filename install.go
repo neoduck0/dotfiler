@@ -21,6 +21,45 @@ func main() {
 	}
 }
 
+type Group struct {
+	name     string
+	mappings []*Mapping
+}
+
+type Mapping struct {
+	src  string
+	dest string
+}
+
+func (m Mapping) createSymlink() {
+	fileInfo, err := os.Stat(m.src)
+	check(err)
+
+	if !(fileInfo.IsDir()) {
+		err = os.MkdirAll(filepath.Dir(m.dest), 0o755)
+		if !os.IsExist(err) {
+			check(err)
+		}
+		err = os.Remove(m.dest)
+		if !os.IsNotExist(err) {
+			check(err)
+		}
+		err = os.Symlink(m.src, m.dest)
+		check(err)
+		return
+	}
+
+	dirFile, err := os.ReadDir(m.src)
+	check(err)
+	for _, file := range dirFile {
+		var newMapping Mapping = Mapping{
+			src:  m.src + "/" + file.Name(),
+			dest: m.dest + "/" + file.Name(),
+		}
+		newMapping.createSymlink()
+	}
+}
+
 const mappingsFile string = "mappings.conf"
 
 var (
@@ -89,45 +128,6 @@ func readMappings() {
 
 			group.mappings = append(group.mappings, mapping)
 		}
-	}
-}
-
-type Group struct {
-	name     string
-	mappings []*Mapping
-}
-
-type Mapping struct {
-	src  string
-	dest string
-}
-
-func (m Mapping) createSymlink() {
-	fileInfo, err := os.Stat(m.src)
-	check(err)
-
-	if !(fileInfo.IsDir()) {
-		err = os.MkdirAll(filepath.Dir(m.dest), 0o755)
-		if !os.IsExist(err) {
-			check(err)
-		}
-		err = os.Remove(m.dest)
-		if !os.IsNotExist(err) {
-			check(err)
-		}
-		err = os.Symlink(m.src, m.dest)
-		check(err)
-		return
-	}
-
-	dirFile, err := os.ReadDir(m.src)
-	check(err)
-	for _, file := range dirFile {
-		var newMapping Mapping = Mapping{
-			src:  m.src + "/" + file.Name(),
-			dest: m.dest + "/" + file.Name(),
-		}
-		newMapping.createSymlink()
 	}
 }
 
