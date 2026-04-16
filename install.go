@@ -84,7 +84,7 @@ func readMappings() {
 	})
 
 	getLineType := func(line string) string {
-		if strings.Contains(line, "#") {
+		if strings.Contains(line, "[") {
 			return "group"
 		} else if strings.Contains(line, ":") {
 			return "mapping"
@@ -101,7 +101,7 @@ func readMappings() {
 		lineType = getLineType(line)
 
 		if lineType == "group" {
-			line = strings.Trim(line, "#")
+			line = strings.Trim(line, "[]")
 			currentGroup = strings.TrimSpace(line)
 		}
 
