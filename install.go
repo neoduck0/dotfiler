@@ -13,17 +13,12 @@ func main() {
 	readMappings()
 
 	fmt.Println()
-	for _, e := range groups {
-		fmt.Println("Info: Symlinking group " + e.name + ".")
-		for _, m := range e.mappings {
+	for g := range groups {
+		fmt.Println("Info: Symlinking group " + g + ".")
+		for _, m := range groups[g] {
 			m.createSymlink()
 		}
 	}
-}
-
-type group struct {
-	name     string
-	mappings []*mapping
 }
 
 type mapping struct {
@@ -65,8 +60,9 @@ const mappingsFile string = "mappings.conf"
 var (
 	homeDir    string
 	contentDir string
-	groups     []*group
 )
+
+var groups map[string][]*mapping = make(map[string][]*mapping)
 
 func initDirs() {
 	homeDir = os.Getenv("HOME")
@@ -99,19 +95,18 @@ func readMappings() {
 		}
 	}
 
-	var currentGroup *group
+	var currentGroup string
 	for _, line := range fileSlice {
 		var lineType string
 		lineType = getLineType(line)
 
 		if lineType == "group" {
 			line = strings.Trim(line, "#")
-			currentGroup = &group{name: strings.TrimSpace(line)}
-			groups = append(groups, currentGroup)
+			currentGroup = strings.TrimSpace(line)
 		}
 
 		if lineType == "mapping" {
-			if currentGroup.name == "" {
+			if currentGroup == "" {
 				fmt.Println("Error: Mapping without a group.")
 				os.Exit(1)
 			}
@@ -126,7 +121,7 @@ func readMappings() {
 				dest: strings.ReplaceAll(lineArr[1], "~", homeDir),
 			}
 
-			currentGroup.mappings = append(currentGroup.mappings, mapping)
+			groups[currentGroup] = append(groups[currentGroup], mapping)
 		}
 	}
 }
