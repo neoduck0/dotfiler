@@ -107,7 +107,7 @@ func readMappings() {
 
 		if lineType == "mapping" {
 			if currentGroup == "" {
-				fmt.Println("Error: Mapping without a group.")
+				fmt.Println("Error: Mapping \"" + line + "\" is without a group.")
 				os.Exit(1)
 			}
 
