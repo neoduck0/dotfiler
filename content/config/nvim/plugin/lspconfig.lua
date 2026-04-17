@@ -27,6 +27,7 @@ vim.lsp.enable("lua_ls")
 vim.lsp.enable("pyright")
 vim.lsp.enable("ts_ls")
 vim.lsp.enable("jsonls")
+vim.lsp.enable("intelephense")
 
 vim.diagnostic.config({
     virtual_text = {

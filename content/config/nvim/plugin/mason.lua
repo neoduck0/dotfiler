@@ -14,6 +14,7 @@ local packages = {
     lua = { "lua-language-server" },
     python = { "pyright", "ruff" },
     typescript = { "typescript-language-server" },
+    php = { "intelephense" }
 }
 
 local to_install = {}

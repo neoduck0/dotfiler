@@ -32,6 +32,7 @@ local ensureInstalled = {
     "lua",
     "markdown",
     "markdown_inline",
+    "php",
     "python",
     "rust",
     "scss",
