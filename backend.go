@@ -18,6 +18,9 @@ func (m mapping) createSymlink() {
 	check(err)
 
 	if !(fileInfo.IsDir()) {
+		if *dryRun {
+			return
+		}
 		err = os.MkdirAll(filepath.Dir(m.dest), 0o755)
 		if !os.IsExist(err) {
 			check(err)

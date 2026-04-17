@@ -3,6 +3,8 @@ set -euo pipefail
 
 cd $(dirname $0)
 
+binary="dotbin"
+
 if command -v go &>/dev/null; then
     echo "Info: Go is installed."
 else
@@ -12,8 +14,15 @@ fi
 
 echo "Info: Building and running binary."
 
-go build .
+go build -o $binary
+trap 'rm -f "$binary"' EXIT
 
-./dotfiler
-
-rm dotfiler
+set +u
+if [[ $1 == "dry-run" ]]; then
+    ./$binary --dry-run
+elif [[ $1 == "normal" ]]; then
+    ./$binary
+else
+    echo "Usage: $0 [dry-run|normal]"
+fi
+set -u
