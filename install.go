@@ -5,8 +5,7 @@ import (
 )
 
 func main() {
-	initDirs()
-	readMappings()
+	readMappings("mappings.conf")
 
 	fmt.Println()
 	for g := range groups {

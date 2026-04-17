@@ -42,24 +42,9 @@ func (m mapping) createSymlink() {
 	}
 }
 
-const mappingsFile string = "mappings.conf"
-
-var (
-	homeDir    string
-	contentDir string
-)
-
 var groups map[string][]*mapping = make(map[string][]*mapping)
 
-func initDirs() {
-	homeDir = os.Getenv("HOME")
-
-	wd, err := os.Getwd()
-	check(err)
-	contentDir = wd + "/content"
-}
-
-func readMappings() {
+func readMappings(mappingsFile string) {
 	fileBytes, err := os.ReadFile(mappingsFile)
 	check(err)
 	fileSlice := strings.Split(string(fileBytes), "\n")
@@ -83,6 +68,17 @@ func readMappings() {
 	}
 
 	var currentGroup string
+	var homeDir string
+	var contentDir string
+	initDirs := func() {
+		homeDir = os.Getenv("HOME")
+
+		wd, err := os.Getwd()
+		check(err)
+		contentDir = wd + "/content"
+	}
+	initDirs()
+
 	for _, line := range fileSlice {
 		var lineType string
 		lineType = getLineType(line)
