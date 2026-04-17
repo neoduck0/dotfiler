@@ -14,6 +14,6 @@ echo "Info: Building and running binary."
 
 go build .
 
-./dotfiles
+./dotfiler
 
-rm dotfiles
+rm dotfiler
