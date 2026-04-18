@@ -1,5 +1,4 @@
 # Dotfiler
-
 This is my personal dotfiles manager written in go.
 
 Use the `run.sh` script to run it, it can be done by `./run.sh`.
@@ -14,3 +13,11 @@ To track a new set of files
 A mapping entry must exist within a group.
 A group's name is wrapped within `[]`.
 All mapping related to the group should follow it.
+
+## Todos
+- Use log instead of fmt.Println
+- Move to parameter passing instead of global variables
+
+## Known Issues
+- If the destination of a mapping contains a broken symlink in its path,
+recursive folder creation fails.
