@@ -14,7 +14,7 @@ fi
 
 echo "Info: Building and running binary."
 
-go build -o $binary
+go build -o $binary ./src
 trap 'rm -f "$binary"' EXIT
 
 set +u

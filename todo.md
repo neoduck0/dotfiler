@@ -1,2 +1,0 @@
-- [ ] use log instead of fmt.Println
-- [ ] move to parameter passing instead of global variables
