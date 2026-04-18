@@ -14,14 +14,4 @@ func main() {
 	p := tea.NewProgram(initialModel())
 	_, err := p.Run()
 	check(err)
-
-	// flag.Parse()
-	//
-	// fmt.Println()
-	// for g := range groups {
-	// 	fmt.Println("Info: Symlinking group " + g + ".")
-	// 	for _, m := range groups[g] {
-	// 		m.createSymlink()
-	// 	}
-	// }
 }
