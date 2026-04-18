@@ -8,7 +8,7 @@ import (
 var dryRun = flag.Bool("dry-run", false, "Perform a trial run without making actual changes")
 
 func main() {
-	readMappings("src/mappings.conf")
+	groups := readMappings("src/mappings.conf")
 	flag.Parse()
 
 	fmt.Println()

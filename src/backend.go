@@ -45,9 +45,7 @@ func (m mapping) createSymlink() {
 	}
 }
 
-var groups map[string][]*mapping = make(map[string][]*mapping)
-
-func readMappings(mappingsFile string) {
+func readMappings(mappingsFile string) map[string][]*mapping {
 	fileBytes, err := os.ReadFile(mappingsFile)
 	check(err)
 	fileSlice := strings.Split(string(fileBytes), "\n")
@@ -82,6 +80,7 @@ func readMappings(mappingsFile string) {
 	}
 	initDirs()
 
+	groups := make(map[string][]*mapping)
 	for _, line := range fileSlice {
 		var lineType string
 		lineType = getLineType(line)
@@ -110,6 +109,7 @@ func readMappings(mappingsFile string) {
 			groups[currentGroup] = append(groups[currentGroup], mapping)
 		}
 	}
+	return groups
 }
 
 func check(err error) {
