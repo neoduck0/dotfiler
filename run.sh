@@ -5,6 +5,17 @@ cd $(dirname $0)
 
 binary="dotbin"
 
+set +u
+if [[ $1 == "dry-run" ]]; then
+    dry_run="yes"
+elif [[ $1 == "normal" ]]; then
+    dry_run="no"
+else
+    echo "Usage: $0 [dry-run|normal]"
+    exit 1
+fi
+set -u
+
 if command -v go &>/dev/null; then
     echo "Info: Go is installed."
 else
@@ -17,12 +28,8 @@ echo "Info: Building and running binary."
 go build -o $binary ./src
 trap 'rm -f "$binary"' EXIT
 
-set +u
-if [[ $1 == "dry-run" ]]; then
+if [[ $dry_run == "yes" ]]; then
     ./$binary --dry-run
-elif [[ $1 == "normal" ]]; then
+elif [[ $dry_run == "no" ]]; then
     ./$binary
-else
-    echo "Usage: $0 [dry-run|normal]"
 fi
-set -u
