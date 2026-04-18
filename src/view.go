@@ -9,30 +9,36 @@ import (
 
 func (m model) View() tea.View {
 	var s strings.Builder
+
 	switch m.screen {
-	case "output":
-		for i := range m.selected {
-			s.WriteString(m.options[i])
-			s.WriteString("\n")
-		}
 	case "choose":
-		s.WriteString("Which dotfiles to install?\n\n")
-		for i, option := range m.options {
-			cursor := " "
-			if m.cursor == i {
-				cursor = ">"
-			}
-
-			checked := " "
-			if _, ok := m.selected[i]; ok {
-				checked = "x"
-			}
-
-			fmt.Fprintf(&s, "%s [%s] %s\n", cursor, checked, option)
-		}
+		m.chooseView(&s)
+	case "":
+		m.emptyView(&s)
 	}
-	s.WriteString("\nPress q to quit.\n")
+
 	teaView := tea.NewView(s.String())
-	teaView.AltScreen = true
+	teaView.AltScreen = m.altscreen
 	return teaView
+}
+
+func (m model) chooseView(s *strings.Builder) {
+	s.WriteString("Which dotfiles to install?\n\n")
+	for i, option := range m.options {
+		cursor := " "
+		if m.cursor == i {
+			cursor = ">"
+		}
+
+		checked := " "
+		if _, ok := m.selected[i]; ok {
+			checked = "x"
+		}
+
+		fmt.Fprintf(s, "%s [%s] %s\n", cursor, checked, option)
+	}
+}
+
+func (m model) emptyView(s *strings.Builder) {
+	s.WriteString("Info: Press enter to exit.\n")
 }

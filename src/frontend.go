@@ -8,20 +8,26 @@ import (
 )
 
 type model struct {
-	// "choose" or "output"
-	screen   string
+	screen    string
+	altscreen bool
+
 	cursor   int
 	options  []string
 	selected map[int]struct{}
 }
 
+func (m *model) setScreen(name string) {
+	m.screen = name
+	m.altscreen = !(m.screen == "")
+}
+
 func initialModel(groups map[string][]*mapping) model {
 	m := model{
-		screen:   "choose",
 		cursor:   0,
 		options:  slices.Collect(maps.Keys(groups)),
 		selected: make(map[int]struct{}),
 	}
+	m.setScreen("choose")
 	return m
 }
 
