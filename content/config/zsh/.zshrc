@@ -1,5 +1,5 @@
 # omz
-ZSH_THEME="my_theme"
+ZSH_THEME="sorin"
 plugins=(git)
 if [ -f $ZDOTDIR/ohmyzsh/oh-my-zsh.sh ]; then
     source $ZDOTDIR/ohmyzsh/oh-my-zsh.sh
