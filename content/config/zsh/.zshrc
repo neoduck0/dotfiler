@@ -9,11 +9,16 @@ fi
 
 # aliases
 alias modify-repos="sudo reflector --save /etc/pacman.d/mirrorlist --protocol https --latest 5 --sort age"
+
 alias rcs-cloud="rclone -v sync ~/Cloud mega-crypt:"
 alias rcs-local="rclone -v sync mega-crypt: ~/Cloud"
 alias rc-check="rclone -v check mega-crypt: ~/Cloud"
+
 alias todo="$EDITOR $TODO_FILE"
 alias rmbadlinks="find . -xtype l -delete"
+
+alias ws="windscribe-cli"
+alias pv="protonvpn"
 
 # vi mode
 bindkey -v
