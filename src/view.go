@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"maps"
-	"slices"
 	"strings"
 
 	tea "charm.land/bubbletea/v2"
@@ -32,8 +30,8 @@ func (m model) View() tea.View {
 
 			fmt.Fprintf(&s, "%s [%s] %s\n", cursor, checked, option)
 		}
-		s.WriteString("\nPress q to quit.\n")
 	}
+	s.WriteString("\nPress q to quit.\n")
 	teaView := tea.NewView(s.String())
 	teaView.AltScreen = true
 	return teaView
