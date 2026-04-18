@@ -2,20 +2,26 @@ package main
 
 import (
 	"flag"
-	"fmt"
+
+	tea "charm.land/bubbletea/v2"
 )
 
 var dryRun = flag.Bool("dry-run", false, "Perform a trial run without making actual changes")
 
 func main() {
 	readMappings("mappings.conf")
-	flag.Parse()
 
-	fmt.Println()
-	for g := range groups {
-		fmt.Println("Info: Symlinking group " + g + ".")
-		for _, m := range groups[g] {
-			m.createSymlink()
-		}
-	}
+	p := tea.NewProgram(initialModel())
+	_, err := p.Run()
+	check(err)
+
+	// flag.Parse()
+	//
+	// fmt.Println()
+	// for g := range groups {
+	// 	fmt.Println("Info: Symlinking group " + g + ".")
+	// 	for _, m := range groups[g] {
+	// 		m.createSymlink()
+	// 	}
+	// }
 }
