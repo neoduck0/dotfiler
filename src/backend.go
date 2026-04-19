@@ -8,9 +8,21 @@ import (
 	"strings"
 )
 
+type group struct {
+	name     string
+	mappings []mapping
+}
+
 type mapping struct {
 	src  string
 	dest string
+}
+
+func (g group) install() {
+	fmt.Println("Info: Symlinking " + g.name + " group")
+	for _, m := range g.mappings {
+		m.createSymlink()
+	}
 }
 
 func (m mapping) createSymlink() {
@@ -18,17 +30,26 @@ func (m mapping) createSymlink() {
 	check(err)
 
 	if !(fileInfo.IsDir()) {
+		fmt.Println("\tInfo: Found " + m.src)
+
 		if *dryRun {
 			return
 		}
+
+		fmt.Println("\tInfo: Making path directories for " +
+			filepath.Dir(m.dest))
 		err = os.MkdirAll(filepath.Dir(m.dest), 0o755)
 		if !os.IsExist(err) {
 			check(err)
 		}
+
+		fmt.Println("\tInfo: Removing  " + m.dest)
 		err = os.Remove(m.dest)
 		if !os.IsNotExist(err) {
 			check(err)
 		}
+
+		fmt.Println("\tInfo: Symlinking to" + m.dest)
 		err = os.Symlink(m.src, m.dest)
 		check(err)
 		return
@@ -45,7 +66,7 @@ func (m mapping) createSymlink() {
 	}
 }
 
-func readMappings(mappingsFile string) map[string][]*mapping {
+func readMappings(mappingsFile string) []group {
 	fileBytes, err := os.ReadFile(mappingsFile)
 	check(err)
 	fileSlice := strings.Split(string(fileBytes), "\n")
@@ -67,26 +88,30 @@ func readMappings(mappingsFile string) map[string][]*mapping {
 		} else if strings.Contains(line, ":") {
 			return "mapping"
 		} else {
-			fmt.Println("Error: Bad line in mapping.conf file.")
+			fmt.Println("Error: Bad line in mapping.conf file")
 			os.Exit(1)
 			return ""
 		}
 	}
 
-	groups := make(map[string][]*mapping)
-	var currentGroup string
+	groups := make([]group, 0, 20)
+	currentGroup := group{name: ""}
 	for _, line := range fileSlice {
 		var lineType string
 		lineType = getLineType(line)
 
 		if lineType == "group" {
+			if currentGroup.name != "" {
+				groups = append(groups, currentGroup)
+			}
+
 			line = strings.Trim(line, "[]")
-			currentGroup = strings.TrimSpace(line)
+			currentGroup = group{name: strings.TrimSpace(line)}
 		}
 
 		if lineType == "mapping" {
-			if currentGroup == "" {
-				fmt.Println("Error: Mapping \"" + line + "\" is without a group.")
+			if currentGroup.name == "" {
+				fmt.Println("Error: Mapping \"" + line + "\" is without a group")
 				os.Exit(1)
 			}
 
@@ -95,12 +120,12 @@ func readMappings(mappingsFile string) map[string][]*mapping {
 			lineArr[0] = strings.TrimSpace(lineArr[0])
 			lineArr[1] = strings.TrimSpace(lineArr[1])
 
-			mapping := &mapping{
+			mapping := mapping{
 				src:  contentDir + "/" + lineArr[0],
 				dest: strings.ReplaceAll(lineArr[1], "~", homeDir),
 			}
 
-			groups[currentGroup] = append(groups[currentGroup], mapping)
+			currentGroup.mappings = append(currentGroup.mappings, mapping)
 		}
 	}
 	return groups
