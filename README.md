@@ -15,8 +15,8 @@ A group's name is wrapped within `[]`.
 All mapping related to the group should follow it.
 
 ## Todos
+- Make groups global
 - Use log instead of fmt.Println
-- Move to parameter passing instead of global variables
 
 ## Known Issues
 - If the destination of a mapping contains a broken symlink in its path,
