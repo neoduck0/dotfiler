@@ -13,6 +13,8 @@ func (m model) View() tea.View {
 	switch m.screen {
 	case "choose":
 		m.chooseView(&s)
+	case "confirm":
+		m.confirmView(&s)
 	case "":
 		m.emptyView(&s)
 	}
@@ -37,6 +39,10 @@ func (m model) chooseView(s *strings.Builder) {
 
 		fmt.Fprintf(s, "%s [%s] %s\n", cursor, checked, option)
 	}
+}
+
+func (m model) confirmView(s *strings.Builder) {
+	s.WriteString("Proceed with installation? [Y/n]\n")
 }
 
 func (m model) emptyView(s *strings.Builder) {
