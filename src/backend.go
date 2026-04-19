@@ -19,7 +19,7 @@ type mapping struct {
 }
 
 func (g group) install() {
-	fmt.Println("Info: Symlinking group " + g.name + ".")
+	fmt.Println("Info: Symlinking " + g.name + " group")
 	for _, m := range g.mappings {
 		m.createSymlink()
 	}
@@ -30,26 +30,26 @@ func (m mapping) createSymlink() {
 	check(err)
 
 	if !(fileInfo.IsDir()) {
-		fmt.Println("\tInfo: Found file " + m.src + ".")
+		fmt.Println("\tInfo: Found " + m.src)
 
 		if *dryRun {
 			return
 		}
 
 		fmt.Println("\tInfo: Making path directories for " +
-			filepath.Dir(m.dest) + ".")
+			filepath.Dir(m.dest))
 		err = os.MkdirAll(filepath.Dir(m.dest), 0o755)
 		if !os.IsExist(err) {
 			check(err)
 		}
 
-		fmt.Println("\tInfo: Removing  " + m.dest + ".")
+		fmt.Println("\tInfo: Removing  " + m.dest)
 		err = os.Remove(m.dest)
 		if !os.IsNotExist(err) {
 			check(err)
 		}
 
-		fmt.Println("\tInfo: Symlinking to" + m.dest + ".")
+		fmt.Println("\tInfo: Symlinking to" + m.dest)
 		err = os.Symlink(m.src, m.dest)
 		check(err)
 		return
@@ -88,7 +88,7 @@ func readMappings(mappingsFile string) []group {
 		} else if strings.Contains(line, ":") {
 			return "mapping"
 		} else {
-			fmt.Println("Error: Bad line in mapping.conf file.")
+			fmt.Println("Error: Bad line in mapping.conf file")
 			os.Exit(1)
 			return ""
 		}
@@ -111,7 +111,7 @@ func readMappings(mappingsFile string) []group {
 
 		if lineType == "mapping" {
 			if currentGroup.name == "" {
-				fmt.Println("Error: Mapping \"" + line + "\" is without a group.")
+				fmt.Println("Error: Mapping \"" + line + "\" is without a group")
 				os.Exit(1)
 			}
 
