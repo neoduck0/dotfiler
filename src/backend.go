@@ -56,6 +56,11 @@ func readMappings(mappingsFile string) map[string][]*mapping {
 		return false
 	})
 
+	homeDir := os.Getenv("HOME")
+	wd, err := os.Getwd()
+	check(err)
+	contentDir := wd + "/content"
+
 	getLineType := func(line string) string {
 		if strings.Contains(line, "[") {
 			return "group"
@@ -68,19 +73,8 @@ func readMappings(mappingsFile string) map[string][]*mapping {
 		}
 	}
 
-	var currentGroup string
-	var homeDir string
-	var contentDir string
-	initDirs := func() {
-		homeDir = os.Getenv("HOME")
-
-		wd, err := os.Getwd()
-		check(err)
-		contentDir = wd + "/content"
-	}
-	initDirs()
-
 	groups := make(map[string][]*mapping)
+	var currentGroup string
 	for _, line := range fileSlice {
 		var lineType string
 		lineType = getLineType(line)

@@ -1,5 +1,6 @@
 window {
-    background-color: @background;
+    background-color: @everforest-bg;
+    border-color:     @everforest-fg;
     border:           2;
     padding:          2;
     width:            500;
@@ -13,20 +14,24 @@ mainbox {
 
 message {
     border:       2px 0 0;
-    border-color: @separatorcolor;
+    border-color: @everforest-fg;
     padding:      1px;
 }
 
 textbox {
     highlight:  @highlight;
-    text-color: @foreground;
+    text-color: @everforest-fg;
 }
 
 listview {
     border:       2px solid 0 0;
     padding:      2px 0 0;
-    border-color: @separatorcolor;
+    border-color: @everforest-fg;
     spacing:      2px;
+}
+
+scrollbar {
+    handle-color: @everforest-fg;
 }
 
 element {
@@ -35,68 +40,65 @@ element {
 }
 
 element.normal.normal {
-    background-color: @normal-background;
-    text-color:       @normal-foreground;
+    background-color: @everforest-bg;
+    text-color:       @everforest-fg;
 }
 
 element.normal.urgent {
-    background-color: @urgent-background;
-    text-color:       @urgent-foreground;
+    background-color: @everforest-red;
+    text-color:       @everforest-bg;
 }
 
 element.normal.active {
-    background-color: @active-background;
-    text-color:       @active-foreground;
+    background-color: @everforest-green;
+    text-color:       @everforest-bg;
 }
 
 element.selected.normal {
-    background-color: @selected-normal-background;
-    text-color:       @selected-normal-foreground;
+    background-color: @everforest-bg2;
+    text-color:       @everforest-orange;
 }
 
 element.selected.urgent {
-    background-color: @selected-urgent-background;
-    text-color:       @selected-urgent-foreground;
+    background-color: @everforest-red;
+    text-color:       @everforest-bg;
 }
 
 element.selected.active {
-    background-color: @selected-active-background;
-    text-color:       @selected-active-foreground;
+    background-color: @everforest-green;
+    text-color:       @everforest-bg;
 }
 
 element.alternate.normal {
-    background-color: @alternate-normal-background;
-    text-color:       @alternate-normal-foreground;
+    background-color: @everforest-bg;
+    text-color:       @everforest-fg;
 }
 
 element.alternate.urgent {
-    background-color: @alternate-urgent-background;
-    text-color:       @alternate-urgent-foreground;
+    background-color: @everforest-red;
+    text-color:       @everforest-bg;
 }
 
 element.alternate.active {
-    background-color: @alternate-active-background;
-    text-color:       @alternate-active-foreground;
+    background-color: @everforest-green;
+    text-color:       @everforest-bg;
 }
 
 mode-switcher {
     border:       2px 0 0;
-    border-color: @separatorcolor;
+    border-color: @everforest-fg;
 }
 
 inputbar {
     spacing:    0;
-    text-color: @normal-foreground;
+    text-color: @everforest-fg;
     padding:    2px;
     children:   [ prompt, textbox-prompt-sep, entry, case-indicator ];
 }
 
-case-indicator,
-entry,
-prompt,
-button {
+case-indicator, entry, prompt, button {
     spacing:    0;
-    text-color: @normal-foreground;
+    text-color: @everforest-fg;
 }
 
 entry {
@@ -104,14 +106,14 @@ entry {
 }
 
 button.selected {
-    background-color: @selected-normal-background;
-    text-color:       @selected-normal-foreground;
+    background-color: @everforest-bg2;
+    text-color:       @everforest-orange;
 }
 
 textbox-prompt-sep {
     expand:     false;
     str:        ":";
-    text-color: @normal-foreground;
+    text-color: @everforest-fg;
     margin:     0 0.3em 0 0;
 }
 element-text, element-icon {
