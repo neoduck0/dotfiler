@@ -8,9 +8,21 @@ import (
 	"strings"
 )
 
+type group struct {
+	name     string
+	mappings []mapping
+}
+
 type mapping struct {
 	src  string
 	dest string
+}
+
+func (g group) install() {
+	fmt.Println("Info: Symlinking group " + g.name + ".")
+	for _, m := range g.mappings {
+		m.createSymlink()
+	}
 }
 
 func (m mapping) createSymlink() {
@@ -45,7 +57,7 @@ func (m mapping) createSymlink() {
 	}
 }
 
-func readMappings(mappingsFile string) map[string][]*mapping {
+func readMappings(mappingsFile string) []group {
 	fileBytes, err := os.ReadFile(mappingsFile)
 	check(err)
 	fileSlice := strings.Split(string(fileBytes), "\n")
@@ -73,19 +85,23 @@ func readMappings(mappingsFile string) map[string][]*mapping {
 		}
 	}
 
-	groups := make(map[string][]*mapping)
-	var currentGroup string
+	groups := make([]group, 0, 20)
+	currentGroup := group{name: ""}
 	for _, line := range fileSlice {
 		var lineType string
 		lineType = getLineType(line)
 
 		if lineType == "group" {
+			if currentGroup.name != "" {
+				groups = append(groups, currentGroup)
+			}
+
 			line = strings.Trim(line, "[]")
-			currentGroup = strings.TrimSpace(line)
+			currentGroup = group{name: strings.TrimSpace(line)}
 		}
 
 		if lineType == "mapping" {
-			if currentGroup == "" {
+			if currentGroup.name == "" {
 				fmt.Println("Error: Mapping \"" + line + "\" is without a group.")
 				os.Exit(1)
 			}
@@ -95,12 +111,12 @@ func readMappings(mappingsFile string) map[string][]*mapping {
 			lineArr[0] = strings.TrimSpace(lineArr[0])
 			lineArr[1] = strings.TrimSpace(lineArr[1])
 
-			mapping := &mapping{
+			mapping := mapping{
 				src:  contentDir + "/" + lineArr[0],
 				dest: strings.ReplaceAll(lineArr[1], "~", homeDir),
 			}
 
-			groups[currentGroup] = append(groups[currentGroup], mapping)
+			currentGroup.mappings = append(currentGroup.mappings, mapping)
 		}
 	}
 	return groups

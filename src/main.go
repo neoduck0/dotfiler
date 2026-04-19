@@ -12,10 +12,7 @@ func main() {
 	flag.Parse()
 
 	fmt.Println()
-	for g := range groups {
-		fmt.Println("Info: Symlinking group " + g + ".")
-		for _, m := range groups[g] {
-			m.createSymlink()
-		}
+	for _, g := range groups {
+		g.install()
 	}
 }
