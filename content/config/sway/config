@@ -1,0 +1,167 @@
+# Hypr -> Sway mapping
+# - hyprlock/hypridle/hyprpaper mapped to swaylock/swayidle/swaybg.
+# - Hypr-only effects (blur, animation, inactive opacity, dwindle/pseudo) are omitted.
+# - Screenshot binds are intentionally omitted.
+
+set $mod Mod4
+set $terminal kitty
+set $menu rofi -show-icons -show drun
+set $filemanager nautilus --new-window
+
+set $ef_bg #232A2E
+set $ef_bg1 #2D353B
+set $ef_bg2 #343F44
+set $ef_fg #D3C6AA
+set $ef_grey #7A8478
+set $ef_yellow #DBBC7F
+set $ef_orange #E69875
+set $ef_blue #7FBBB3
+
+default_border pixel 2
+gaps inner 2
+gaps outer 4
+focus_follows_mouse no
+
+client.focused $ef_orange $ef_bg $ef_fg $ef_blue $ef_orange
+client.focused_inactive $ef_bg2 $ef_bg $ef_fg $ef_bg2 $ef_bg2
+client.unfocused $ef_bg1 $ef_bg $ef_grey $ef_bg1 $ef_bg1
+client.urgent #E67E80 $ef_bg $ef_fg #E67E80 #E67E80
+client.placeholder $ef_bg1 $ef_bg $ef_fg $ef_bg1 $ef_bg1
+
+bar {
+    position top
+    mode dock
+    workspace_buttons yes
+    binding_mode_indicator yes
+    tray_output primary
+
+    colors {
+        background $ef_bg
+        statusline $ef_fg
+        separator $ef_bg2
+
+        focused_workspace  $ef_orange $ef_orange $ef_bg
+        active_workspace   $ef_blue $ef_blue $ef_bg
+        inactive_workspace $ef_bg1 $ef_bg1 $ef_fg
+        urgent_workspace   #E67E80 #E67E80 $ef_bg
+        binding_mode       $ef_yellow $ef_yellow $ef_bg
+    }
+}
+
+output eDP-1 mode 1920x1080@60Hz position 0 0 scale 1.25
+output HDMI-A-1 mode 1920x1080@60Hz position -1920 0 scale 1
+
+input type:keyboard {
+    xkb_layout us,ara
+    xkb_options grp:alts_toggle
+}
+
+input type:pointer {
+    accel_profile flat
+    pointer_accel 0
+}
+
+input type:touchpad {
+    natural_scroll enabled
+}
+
+input type:tablet_tool {
+    map_to_output eDP-1
+}
+
+workspace 1 output eDP-1
+workspace 2 output eDP-1
+workspace 3 output eDP-1
+workspace 4 output eDP-1
+workspace 5 output eDP-1
+workspace 10 output HDMI-A-1
+
+for_window [app_id="xdg-desktop-portal-gtk"] floating enable
+for_window [title="Picture-in-Picture"] floating enable, sticky enable
+for_window [title="Picture in picture"] floating enable, sticky enable
+for_window [title="Calculator"] floating enable, sticky enable
+
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec swaybg -i ~/.local/share/wall.png -m fill
+exec swayidle -w timeout 180 'brightnessctl -s set 10%' resume 'brightnessctl -r' timeout 240 'swaylock -f' timeout 245 'swaymsg "output * power off"' resume 'swaymsg "output * power on"; brightnessctl -r' timeout 600 'systemctl suspend' before-sleep 'swaylock -f'
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+exec wl-clip-persist --clipboard regular
+exec rfkill unblock bluetooth
+exec bluetoothctl power off
+
+bindsym --locked XF86MonBrightnessUp exec brightnessctl s 5%+
+bindsym --locked XF86MonBrightnessDown exec brightnessctl s 5%-
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPause exec playerctl play-pause
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioPrev exec playerctl previous
+
+bindsym $mod+Delete exec swaylock -f
+
+bindsym $mod+1 workspace 1
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+0 workspace 10
+bindsym $mod+Shift+0 move container to workspace 10
+
+bindsym $mod+BackSpace kill
+bindsym $mod+Tab focus next
+bindsym $mod+u split toggle
+bindsym $mod+o exec $menu
+bindsym $mod+p exec cliphist list | rofi -dmenu | cliphist decode | wl-copy
+bindsym $mod+bracketleft move left
+bindsym $mod+Shift+bracketleft move down
+bindsym $mod+bracketright move right
+bindsym $mod+Shift+bracketright move up
+bindsym $mod+backslash floating toggle
+bindsym $mod+a mode "Control"
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+semicolon resize shrink width 40px
+bindsym $mod+Shift+semicolon resize grow height 40px
+bindsym $mod+apostrophe resize grow width 40px
+bindsym $mod+Shift+apostrophe resize shrink height 40px
+bindsym $mod+Return exec $terminal
+bindsym $mod+n exec $filemanager
+bindsym $mod+m sticky toggle
+bindsym $mod+period exec rofi -modi emoji -show emoji
+
+bindsym $mod+space exec playerctl play-pause
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+floating_modifier $mod normal
+
+mode "Control" {
+    bindsym Escape mode "default"
+    bindsym w exec rfkill toggle wifi
+    bindsym d exec sh -c 'if swaymsg -t get_outputs -r | jq -e ''.[] | select(.name=="HDMI-A-1" and .power==true)'' >/dev/null; then swaymsg output HDMI-A-1 power off; else swaymsg output HDMI-A-1 power on; fi'
+    bindsym Shift+d exec sh -c 'if swaymsg -t get_outputs -r | jq -e ''.[] | select(.name=="eDP-1" and .power==true)'' >/dev/null; then swaymsg output eDP-1 power off; else swaymsg output eDP-1 power on; fi'
+    bindsym --repeat h exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-
+    bindsym --repeat Shift+h exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%-
+    bindsym --repeat j exec brightnessctl s 5%-
+    bindsym --repeat Shift+j exec brightnessctl s 10%-
+    bindsym --repeat k exec brightnessctl s 5%+
+    bindsym --repeat Shift+k exec brightnessctl s 10%+
+    bindsym --repeat l exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+    bindsym --repeat Shift+l exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%+
+    bindsym b exec tglbluetooth
+    bindsym m exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+}
