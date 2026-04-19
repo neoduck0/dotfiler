@@ -1,9 +1,7 @@
 * {
-    /* Theme settings */
     highlight: bold italic;
     scrollbar: true;
 
-    /* Tokyo Night Storm colors */
     everforest-bg:           #232A2E;
     everforest-bg1:          #2D353B;
     everforest-bg2:          #343F44;
@@ -11,38 +9,10 @@
     everforest-red:          #E67E80;
     everforest-green:        #A7C080;
     everforest-yellow:       #DBBC7F;
+    everforest-orange:       #E69875;
     everforest-blue:         #7FBBB3;
     everforest-magenta:      #D699B6;
     everforest-cyan:         #83C092;
-
-    /* Theme colors */
-    background:                  @everforest-bg;
-    background-color:            @background;
-    foreground:                  @everforest-fg;
-    border-color:                @foreground;
-    separatorcolor:              @border-color;
-    scrollbar-handle:            @border-color;
-
-    normal-background:           @background;
-    normal-foreground:           @foreground;
-    alternate-normal-background: @background;
-    alternate-normal-foreground: @foreground;
-    selected-normal-background:  @everforest-bg2;
-    selected-normal-foreground:  @everforest-blue;
-
-    active-background:           @everforest-green;
-    active-foreground:           @everforest-bg;
-    alternate-active-background: @active-background;
-    alternate-active-foreground: @active-foreground;
-    selected-active-background:  @everforest-green;
-    selected-active-foreground:  @active-foreground;
-
-    urgent-background:           @everforest-red;
-    urgent-foreground:           @everforest-bg;
-    alternate-urgent-background: @urgent-background;
-    alternate-urgent-foreground: @urgent-foreground;
-    selected-urgent-background:  @everforest-red;
-    selected-urgent-foreground:  @urgent-foreground;
 }
 
 @import "common"
