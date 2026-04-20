@@ -38,6 +38,7 @@ local ensureInstalled = {
     "scss",
     "sql",
     "tmux",
+    "typescript",
     "vim",
     "vimdoc",
     "xml",
