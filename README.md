@@ -15,8 +15,9 @@ A group's name is wrapped within `[]`.
 All mapping related to the group should follow it.
 
 ## Todos
-- Make groups global
-- Use log instead of fmt.Println
+- Color the terminal log
+- Allow searching a specific group
+- Seperate software and actual dotfiles
 
 ## Known Issues
 - If the destination of a mapping contains a broken symlink in its path,
