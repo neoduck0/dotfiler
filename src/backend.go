@@ -30,26 +30,26 @@ func (m mapping) createSymlink() {
 	check(err)
 
 	if !(fileInfo.IsDir()) {
-		fmt.Println("\tInfo: Found " + m.src)
+		fmt.Println("Debug: Found " + m.src)
 
 		if *dryRun {
 			return
 		}
 
-		fmt.Println("\tInfo: Making path directories for " +
-			filepath.Dir(m.dest))
+		fmt.Println("Debug: Making directories " +
+			filepath.Dir(m.dest) + "/")
 		err = os.MkdirAll(filepath.Dir(m.dest), 0o755)
 		if !os.IsExist(err) {
 			check(err)
 		}
 
-		fmt.Println("\tInfo: Removing  " + m.dest)
+		fmt.Println("Debug: Removing " + m.dest)
 		err = os.Remove(m.dest)
 		if !os.IsNotExist(err) {
 			check(err)
 		}
 
-		fmt.Println("\tInfo: Symlinking to" + m.dest)
+		fmt.Println("Debug: Symlinking to " + m.dest)
 		err = os.Symlink(m.src, m.dest)
 		check(err)
 		return
