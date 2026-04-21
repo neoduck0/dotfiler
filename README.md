@@ -22,3 +22,5 @@ All mapping related to the group should follow it.
 ## Known Issues
 - If the destination of a mapping contains a broken symlink in its path,
 recursive folder creation fails.
+- Untested edge case if a filename ends or starts with empty space,
+`strings.Trim` might badly interfere.
