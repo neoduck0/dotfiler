@@ -48,13 +48,13 @@ func (m mapping) createSymlink() {
 	}
 
 	fmt.Println("Debug: Making directories " +
-		filepath.Dir(m.dest) + "/")
+		filepath.Dir(m.dest) + "/" + " if does not exists")
 	err = os.MkdirAll(filepath.Dir(m.dest), 0o755)
 	if !os.IsExist(err) {
 		check(err)
 	}
 
-	fmt.Println("Debug: Removing " + m.dest)
+	fmt.Println("Debug: Removing " + m.dest + " if exists")
 	err = os.Remove(m.dest)
 	if !os.IsNotExist(err) {
 		check(err)
