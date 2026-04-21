@@ -3,7 +3,7 @@ set -euo pipefail
 
 cd $(dirname $0)
 
-binary="dotbin"
+binary="dotfiler"
 
 set +u
 if [[ $1 == "dry-run" ]]; then
