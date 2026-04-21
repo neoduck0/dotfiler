@@ -8,8 +8,9 @@ type model struct {
 	screen    string
 	altscreen bool
 
-	cursor    int
-	selected  map[int]struct{}
+	selectCursor int
+	selected     map[int]struct{}
+
 	confirmed bool
 }
 
@@ -20,11 +21,11 @@ func (m *model) setScreen(name string) {
 
 func initialModel() model {
 	m := model{
-		cursor:   0,
-		selected: make(map[int]struct{}),
+		selectCursor: 0,
+		selected:     make(map[int]struct{}),
 	}
 
-	m.setScreen("choose")
+	m.setScreen("select")
 
 	return m
 }

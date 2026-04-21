@@ -17,8 +17,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, tea.Quit
 	default:
 		switch m.screen {
-		case "choose":
-			teaCmd = m.chooseUpdate(msgStr)
+		case "select":
+			teaCmd = m.selectUpdate(msgStr)
 
 		case "confirm":
 			teaCmd = m.confirmUpdate(msgStr)
@@ -31,16 +31,16 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, teaCmd
 }
 
-func (m *model) chooseUpdate(key string) tea.Cmd {
+func (m *model) selectUpdate(key string) tea.Cmd {
 	switch key {
 	case "up", "k":
-		if m.cursor > 0 {
-			m.cursor--
+		if m.selectCursor > 0 {
+			m.selectCursor--
 		}
 
 	case "down", "j":
-		if m.cursor < len(groups)-1 {
-			m.cursor++
+		if m.selectCursor < len(groups)-1 {
+			m.selectCursor++
 		}
 
 	case "a":
@@ -59,11 +59,11 @@ func (m *model) chooseUpdate(key string) tea.Cmd {
 		}
 
 	case "space":
-		_, ok := m.selected[m.cursor]
+		_, ok := m.selected[m.selectCursor]
 		if ok {
-			delete(m.selected, m.cursor)
+			delete(m.selected, m.selectCursor)
 		} else {
-			m.selected[m.cursor] = struct{}{}
+			m.selected[m.selectCursor] = struct{}{}
 		}
 
 	case "enter":
@@ -82,7 +82,7 @@ func (m *model) confirmUpdate(key string) tea.Cmd {
 		m.confirmed = true
 		return tea.Quit
 	case "n", "N":
-		m.setScreen("choose")
+		m.setScreen("select")
 	}
 
 	return nil

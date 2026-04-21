@@ -11,8 +11,8 @@ func (m model) View() tea.View {
 	var s strings.Builder
 
 	switch m.screen {
-	case "choose":
-		m.chooseView(&s)
+	case "select":
+		m.selectView(&s)
 	case "confirm":
 		m.confirmView(&s)
 	case "":
@@ -24,11 +24,11 @@ func (m model) View() tea.View {
 	return teaView
 }
 
-func (m model) chooseView(s *strings.Builder) {
+func (m model) selectView(s *strings.Builder) {
 	s.WriteString("Which dotfiles to install?\n\n")
 	for i, option := range groups {
 		cursor := " "
-		if m.cursor == i {
+		if m.selectCursor == i {
 			cursor = ">"
 		}
 
