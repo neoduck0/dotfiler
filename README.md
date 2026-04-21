@@ -15,9 +15,9 @@ A group's name is wrapped within `[]`.
 All mapping related to the group should follow it.
 
 ## Todos
-- Color the terminal log
-- Allow searching a specific group
-- Seperate software and actual dotfiles
+- Colorize ouput
+- Allow searching
+- Seperate program from my dotfiles
 
 ## Known Issues
 - If the destination of a mapping contains a broken symlink in its path,
