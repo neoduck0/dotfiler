@@ -29,41 +29,41 @@ func (m mapping) createSymlink() {
 	fileInfo, err := os.Stat(m.src)
 	check(err)
 
-	if !(fileInfo.IsDir()) {
-		fmt.Println("Debug: Found " + m.src)
-
-		if *dryRun {
-			return
-		}
-
-		fmt.Println("Debug: Making directories " +
-			filepath.Dir(m.dest) + "/")
-		err = os.MkdirAll(filepath.Dir(m.dest), 0o755)
-		if !os.IsExist(err) {
-			check(err)
-		}
-
-		fmt.Println("Debug: Removing " + m.dest)
-		err = os.Remove(m.dest)
-		if !os.IsNotExist(err) {
-			check(err)
-		}
-
-		fmt.Println("Debug: Symlinking to " + m.dest)
-		err = os.Symlink(m.src, m.dest)
+	if fileInfo.IsDir() {
+		dirFile, err := os.ReadDir(m.src)
 		check(err)
+		for _, file := range dirFile {
+			var newMapping mapping = mapping{
+				src:  m.src + "/" + file.Name(),
+				dest: m.dest + "/" + file.Name(),
+			}
+			newMapping.createSymlink()
+		}
+	}
+
+	fmt.Println("Debug: Found " + m.src)
+
+	if *dryRun {
 		return
 	}
 
-	dirFile, err := os.ReadDir(m.src)
-	check(err)
-	for _, file := range dirFile {
-		var newMapping mapping = mapping{
-			src:  m.src + "/" + file.Name(),
-			dest: m.dest + "/" + file.Name(),
-		}
-		newMapping.createSymlink()
+	fmt.Println("Debug: Making directories " +
+		filepath.Dir(m.dest) + "/")
+	err = os.MkdirAll(filepath.Dir(m.dest), 0o755)
+	if !os.IsExist(err) {
+		check(err)
 	}
+
+	fmt.Println("Debug: Removing " + m.dest)
+	err = os.Remove(m.dest)
+	if !os.IsNotExist(err) {
+		check(err)
+	}
+
+	fmt.Println("Debug: Symlinking to " + m.dest)
+	err = os.Symlink(m.src, m.dest)
+	check(err)
+	return
 }
 
 func readMappings(mappingsFile string) {
