@@ -22,9 +22,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case "confirm":
 			teaCmd = m.confirmUpdate(msgStr)
-
-		case "":
-			teaCmd = m.emptyUpdate(msgStr)
 		}
 	}
 
@@ -83,15 +80,6 @@ func (m *model) confirmUpdate(key string) tea.Cmd {
 		return tea.Quit
 	case "n", "N":
 		m.setScreen("select")
-	}
-
-	return nil
-}
-
-func (m *model) emptyUpdate(key string) tea.Cmd {
-	switch key {
-	case "enter":
-		return tea.Quit
 	}
 
 	return nil

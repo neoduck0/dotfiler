@@ -15,8 +15,6 @@ func (m model) View() tea.View {
 		m.selectView(&s)
 	case "confirm":
 		m.confirmView(&s)
-	case "":
-		m.emptyView(&s)
 	}
 
 	teaView := tea.NewView(s.String())
@@ -43,8 +41,4 @@ func (m model) selectView(s *strings.Builder) {
 
 func (m model) confirmView(s *strings.Builder) {
 	s.WriteString("Proceed with installation? [Y/n]\n")
-}
-
-func (m model) emptyView(s *strings.Builder) {
-	s.WriteString("Info: Press enter to exit.\n")
 }
