@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"strings"
 
 	tea "charm.land/bubbletea/v2"
 )
@@ -13,6 +15,8 @@ var (
 )
 
 func main() {
+	cdCwd()
+
 	readMappings("src/mappings.conf")
 	flag.Parse()
 
@@ -34,4 +38,12 @@ func main() {
 	default:
 		fmt.Println("Error: Bubbletea model type not model")
 	}
+}
+
+func cdCwd() {
+	wd, err := os.Getwd()
+	check(err)
+	// For debugger if it creates binary inside ./src
+	err = os.Chdir(strings.TrimSuffix(wd, "/src"))
+	check(err)
 }

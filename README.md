@@ -1,8 +1,6 @@
 # Dotfiler
 This is my personal dotfiles manager written in go.
 
-Use the `run.sh` script to run it, it can be done by `./run.sh`.
-
 Only files inside the `content` directory will be symlinked.
 Directories are never symlinked.
 
@@ -13,6 +11,10 @@ To track a new set of files
 A mapping entry must exist within a group.
 A group's name is wrapped within `[]`.
 All mapping related to the group should follow it.
+
+## How to run
+1. Build `go build -o dotfiler ./src`
+2. Run `./dotfiler`
 
 ## Todos
 - Colorize ouput
