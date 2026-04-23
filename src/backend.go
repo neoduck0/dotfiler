@@ -68,6 +68,10 @@ func (m mapping) createSymlink() {
 
 func readMappings(mappingsFile string) {
 	fileBytes, err := os.ReadFile(mappingsFile)
+	if os.IsNotExist(err) {
+		fmt.Println("Error: " + mappingsFile + " file does not exists")
+		os.Exit(1)
+	}
 	check(err)
 	fileSlice := strings.Split(string(fileBytes), "\n")
 	fileSlice = slices.DeleteFunc(fileSlice, func(line string) bool {
