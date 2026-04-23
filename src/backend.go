@@ -39,6 +39,7 @@ func (m mapping) createSymlink() {
 			}
 			newMapping.createSymlink()
 		}
+		return
 	}
 
 	fmt.Println("Debug: Found " + m.src)
@@ -63,7 +64,6 @@ func (m mapping) createSymlink() {
 	fmt.Println("Debug: Symlinking to " + m.dest)
 	err = os.Symlink(m.src, m.dest)
 	check(err)
-	return
 }
 
 func readMappings(mappingsFile string) {
