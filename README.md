@@ -16,7 +16,6 @@ All mapping related to the group should follow it.
 
 ## Todos
 - Colorize ouput
-- Allow searching
 - Seperate program from my dotfiles
 
 ## Known Issues

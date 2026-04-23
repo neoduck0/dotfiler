@@ -26,8 +26,10 @@ func main() {
 			fmt.Println("Info: Gracefully quiting")
 			return
 		}
-		for i := range m.selected {
-			groups[i].install()
+		for _, g := range groups {
+			if g.selected {
+				g.install()
+			}
 		}
 	default:
 		fmt.Println("Error: Bubbletea model type not model")

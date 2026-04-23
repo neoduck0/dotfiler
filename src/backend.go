@@ -11,6 +11,7 @@ import (
 type group struct {
 	name     string
 	mappings []mapping
+	selected bool
 }
 
 type mapping struct {

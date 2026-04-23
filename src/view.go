@@ -23,19 +23,22 @@ func (m model) View() tea.View {
 }
 
 func (m model) selectView(s *strings.Builder) {
-	s.WriteString("Which dotfiles to install?\n\n")
-	for i, option := range groups {
+	s.WriteString("Filter: " + m.filterText + "\n")
+
+	for i, g := range m.filterList {
 		cursor := " "
-		if m.selectCursor == i {
-			cursor = ">"
+		if !m.filterMode {
+			if m.selectCursor == i {
+				cursor = ">"
+			}
 		}
 
 		checked := " "
-		if _, ok := m.selected[i]; ok {
+		if g.selected {
 			checked = "x"
 		}
 
-		fmt.Fprintf(s, "%s [%s] %s\n", cursor, checked, option.name)
+		fmt.Fprintf(s, "%s [%s] %s\n", cursor, checked, g.name)
 	}
 }
 

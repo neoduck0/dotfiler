@@ -29,6 +29,34 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m *model) selectUpdate(key string) tea.Cmd {
+	if key == "/" {
+		m.filterMode = true
+		return nil
+	}
+
+	if key == "esc" && m.filterMode {
+		m.filterMode = false
+		return nil
+	}
+
+	if m.filterMode {
+		if key == "backspace" && len(m.filterText) >= 1 {
+			m.filterText = m.filterText[0 : len(m.filterText)-1]
+		} else if len(key) == 1 && key[0] < 128 {
+			m.filterText += key
+		} else if key == "space" {
+			m.filterText += " "
+		}
+
+		m.updateFilterList()
+		if m.selectCursor >= len(m.filterList) &&
+			len(m.filterList) > 0 {
+			m.selectCursor = len(m.filterList) - 1
+		}
+
+		return nil
+	}
+
 	switch key {
 	case "up", "k":
 		if m.selectCursor > 0 {
@@ -36,32 +64,29 @@ func (m *model) selectUpdate(key string) tea.Cmd {
 		}
 
 	case "down", "j":
-		if m.selectCursor < len(groups)-1 {
+		if m.selectCursor < len(m.filterList)-1 {
 			m.selectCursor++
 		}
 
 	case "a":
 		toggleOn := false
-		if _, on := m.selected[0]; !on {
+		if !m.filterList[0].selected {
 			toggleOn = true
 		}
+
 		if toggleOn {
-			for k := range groups {
-				m.selected[k] = struct{}{}
+			for _, g := range m.filterList {
+				g.selected = true
 			}
 		} else {
-			for k := range groups {
-				delete(m.selected, k)
+			for _, g := range m.filterList {
+				g.selected = false
 			}
 		}
 
 	case "space":
-		_, ok := m.selected[m.selectCursor]
-		if ok {
-			delete(m.selected, m.selectCursor)
-		} else {
-			m.selected[m.selectCursor] = struct{}{}
-		}
+		group := m.filterList[m.selectCursor]
+		group.selected = !group.selected
 
 	case "enter":
 		m.setScreen("confirm")
