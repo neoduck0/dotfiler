@@ -12,13 +12,13 @@ A mapping entry must exist within a group.
 A group's name is wrapped within `[]`.
 All mapping related to the group should follow it.
 
-## How to run
-1. Build `go build -o dotfiler ./src`
-2. Run `./dotfiler`
+To run, do `go build -o dotfiler ./src; ./dotfiler`
 
 ## Todos
 - Colorize ouput
+- Show 10 entries at once at max
 - Seperate program from my dotfiles
+- Allow choosing to copy or to symlink
 
 ## Known Issues
 - If the destination of a mapping contains a broken symlink in its path,
