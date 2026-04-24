@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	tea "charm.land/bubbletea/v2"
+	"github.com/fatih/color"
 )
 
 func (m model) View() tea.View {
@@ -23,7 +24,11 @@ func (m model) View() tea.View {
 }
 
 func (m model) selectView(s *strings.Builder) {
-	s.WriteString("Filter: " + m.filterText + "\n")
+	filterText := m.filterText
+	if m.filterMode {
+		filterText = color.MagentaString(m.filterText)
+	}
+	s.WriteString("Filter: " + filterText + "\n")
 
 	for i, g := range m.filterList {
 		cursor := " "
@@ -38,7 +43,13 @@ func (m model) selectView(s *strings.Builder) {
 			checked = "x"
 		}
 
-		fmt.Fprintf(s, "%s [%s] %s\n", cursor, checked, g.name)
+		line := fmt.Sprintf("%s [%s] %s\n", cursor, checked, g.name)
+
+		if m.selectCursor == i && !m.filterMode {
+			line = color.MagentaString(line)
+		}
+
+		s.WriteString(line)
 	}
 }
 
