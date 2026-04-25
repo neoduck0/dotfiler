@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -22,7 +23,9 @@ func main() {
 
 	p := tea.NewProgram(initialModel())
 	m, err := p.Run()
-	check(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	switch m := m.(type) {
 	case model:
@@ -42,8 +45,13 @@ func main() {
 
 func cdCwd() {
 	wd, err := os.Getwd()
-	check(err)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// For debugger if it creates binary inside ./src
 	err = os.Chdir(strings.TrimSuffix(wd, "/src"))
-	check(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

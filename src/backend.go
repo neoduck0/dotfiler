@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"slices"
@@ -28,11 +29,15 @@ func (g group) install() {
 
 func (m mapping) createSymlink() {
 	fileInfo, err := os.Stat(m.src)
-	check(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	if fileInfo.IsDir() {
 		dirFile, err := os.ReadDir(m.src)
-		check(err)
+		if err != nil {
+			log.Fatal(err)
+		}
 		for _, file := range dirFile {
 			var newMapping mapping = mapping{
 				src:  m.src + "/" + file.Name(),
@@ -53,18 +58,24 @@ func (m mapping) createSymlink() {
 		filepath.Dir(m.dest) + "/" + " if does not exists")
 	err = os.MkdirAll(filepath.Dir(m.dest), 0o755)
 	if !os.IsExist(err) {
-		check(err)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	fmt.Println("Debug: Removing " + m.dest + " if exists")
 	err = os.Remove(m.dest)
 	if !os.IsNotExist(err) {
-		check(err)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	fmt.Println("Debug: Symlinking to " + m.dest)
 	err = os.Symlink(m.src, m.dest)
-	check(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func readMappings(mappingsFile string) {
@@ -73,7 +84,9 @@ func readMappings(mappingsFile string) {
 		fmt.Println("Error: " + mappingsFile + " file does not exists")
 		os.Exit(1)
 	}
-	check(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fileSlice := strings.Split(string(fileBytes), "\n")
 	fileSlice = slices.DeleteFunc(fileSlice, func(line string) bool {
 		if line == "" {
@@ -84,7 +97,9 @@ func readMappings(mappingsFile string) {
 
 	homeDir := os.Getenv("HOME")
 	wd, err := os.Getwd()
-	check(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	contentDir := wd + "/content"
 
 	getLineType := func(line string) string {
@@ -135,12 +150,5 @@ func readMappings(mappingsFile string) {
 	}
 	if currentGroup.name != "" {
 		groups = append(groups, currentGroup)
-	}
-}
-
-func check(err error) {
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
 	}
 }
