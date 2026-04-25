@@ -11,6 +11,9 @@ import (
 func (m model) View() tea.View {
 	var s strings.Builder
 
+	header := renderStyle(titleStyle, "Dotfiler")
+	s.WriteString(header + "\n\n")
+
 	switch m.screen {
 	case "select":
 		m.selectView(&s)
@@ -62,4 +65,7 @@ func renderStyle(style lipgloss.Style, s string) string {
 	return strings.TrimSpace(style.Render(s))
 }
 
-var selectedStyle = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Magenta)
+var (
+	titleStyle    = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Green)
+	selectedStyle = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Magenta)
+)
