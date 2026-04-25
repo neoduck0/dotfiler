@@ -3,7 +3,6 @@ export GOPATH=~/.local/share/.go
 export PATH=~/.config/waybar/scripts:"$PATH"
 export PATH=~/.local/bin:"$PATH"
 export ZDOTDIR=~/.config/zsh
-export TODO_FILE=~/Cloud/todo.md
 export PYTHON_HISTORY=/dev/null
 export PKGS_FILE=~/Projects/dotfiles/content/local-bin/pkgs
 

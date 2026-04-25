@@ -8,7 +8,6 @@
         "hyprland/workspaces",
         "custom/drepos",
         "custom/pcheck",
-        "custom/ctodos",
         "wlr/taskbar",
         "hyprland/submap"
     ],
@@ -46,12 +45,6 @@
     },
     "custom/pcheck": {
         "exec": "pcheck waybar",
-        "interval": 60,
-        "return-type": "json",
-        "format": "{text}"
-    },
-    "custom/ctodos": {
-        "exec": "ctodos",
         "interval": 60,
         "return-type": "json",
         "format": "{text}"
