@@ -1,4 +1,4 @@
-module dotfiler
+module github.com/a/dotfiler
 
 go 1.26.2
 
