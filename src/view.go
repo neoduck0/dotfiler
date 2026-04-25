@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	tea "charm.land/bubbletea/v2"
-	"github.com/fatih/color"
+	"charm.land/lipgloss/v2"
 )
 
 func (m model) View() tea.View {
@@ -25,7 +25,7 @@ func (m model) View() tea.View {
 
 func (m model) selectView(s *strings.Builder) {
 	if m.filterMode {
-		s.WriteString(color.MagentaString("Filter: "))
+		s.WriteString(renderStyle(selectedStyle, "Filter: "))
 	} else {
 		s.WriteString("Filter: ")
 	}
@@ -47,7 +47,7 @@ func (m model) selectView(s *strings.Builder) {
 		line := fmt.Sprintf("%s [%s] %s\n", cursor, checked, g.name)
 
 		if m.selectCursor == i && !m.filterMode {
-			line = color.MagentaString(line)
+			line = renderStyle(selectedStyle, line)
 		}
 
 		s.WriteString(line)
@@ -57,3 +57,9 @@ func (m model) selectView(s *strings.Builder) {
 func (m model) confirmView(s *strings.Builder) {
 	s.WriteString("Proceed with installation? [Y/n]\n")
 }
+
+func renderStyle(style lipgloss.Style, s string) string {
+	return strings.TrimSpace(style.Render(s))
+}
+
+var selectedStyle = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Magenta)
