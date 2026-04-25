@@ -73,11 +73,10 @@ FLATPAKS = [
     "com.usebottles.bottles",
     "dev.vencord.Vesktop",
     "io.gitlab.librewolf-community",
-    "md.obsidian.Obsidian",
     "org.shotcut.Shotcut",
 ]
 
-AUR = ["helium-browser-bin", "yay", "code-marketplace"]
+AUR = ["helium-browser-bin", "yay"]
 
 BASIC = [
     "ascii",
@@ -87,6 +86,9 @@ BASIC = [
     "btrfs-progs",
     "clang",
     "curl",
+    "delve",
+    "gopls",
+    "gofumpt",
     "docker",
     "docker-compose",
     "dosfstools",
@@ -153,10 +155,10 @@ DESKTOP = [
     "bluez",
     "bluez-utils",
     "calf",
-    "code",
     "deluge-gtk",
     "dmidecode",
     "dnsmasq",
+    "drawio-desktop",
     "eartag",
     "easyeffects",
     "ffmpeg",
@@ -179,6 +181,7 @@ DESKTOP = [
     "noto-fonts-cjk",
     "noto-fonts-emoji",
     "noto-fonts-extra",
+    "obsidian",
     "ollama",
     "ollama-vulkan",
     "opencode",
