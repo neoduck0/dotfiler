@@ -24,11 +24,12 @@ func (m model) View() tea.View {
 }
 
 func (m model) selectView(s *strings.Builder) {
-	filterText := m.filterText
 	if m.filterMode {
-		filterText = color.MagentaString(m.filterText)
+		s.WriteString(color.MagentaString("Filter: "))
+	} else {
+		s.WriteString("Filter: ")
 	}
-	s.WriteString("Filter: " + filterText + "\n")
+	s.WriteString(m.filterText + "\n")
 
 	for i, g := range m.filterList {
 		cursor := " "
