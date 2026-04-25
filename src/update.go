@@ -29,19 +29,24 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m *model) selectUpdate(key string) tea.Cmd {
-	if key == "tab" {
+	switch key {
+	case "tab":
 		m.filterMode = !m.filterMode
 		return nil
-	}
 
-	if key == "/" {
+	case "/":
 		m.filterMode = true
 		return nil
-	}
 
-	if key == "esc" && m.filterMode {
+	case "esc":
 		m.filterMode = false
 		return nil
+
+	case "enter":
+		if m.filterMode {
+			m.filterMode = false
+			return nil
+		}
 	}
 
 	if m.filterMode {
