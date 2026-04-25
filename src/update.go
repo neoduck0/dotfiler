@@ -16,11 +16,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case "ctrl+c":
 		return m, tea.Quit
 	default:
-		switch m.screen {
-		case "select":
+		switch m.currentView {
+		case selectView:
 			teaCmd = m.selectUpdate(msgStr)
 
-		case "confirm":
+		case confirmView:
 			teaCmd = m.confirmUpdate(msgStr)
 		}
 	}
@@ -99,7 +99,7 @@ func (m *model) selectUpdate(key string) tea.Cmd {
 		group.selected = !group.selected
 
 	case "enter":
-		m.setScreen("confirm")
+		m.setScreen(confirmView)
 
 	case "q":
 		return tea.Quit
@@ -114,7 +114,7 @@ func (m *model) confirmUpdate(key string) tea.Cmd {
 		m.confirmed = true
 		return tea.Quit
 	case "n", "N":
-		m.setScreen("select")
+		m.setScreen(selectView)
 	}
 
 	return nil

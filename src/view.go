@@ -14,15 +14,15 @@ func (m model) View() tea.View {
 	header := renderStyle(titleStyle, "Dotfiler")
 	s.WriteString(header + "\n\n")
 
-	switch m.screen {
-	case "select":
+	switch m.currentView {
+	case selectView:
 		m.selectView(&s)
-	case "confirm":
+	case confirmView:
 		m.confirmView(&s)
 	}
 
 	teaView := tea.NewView(s.String())
-	teaView.AltScreen = m.altscreen
+	teaView.AltScreen = true
 	return teaView
 }
 

@@ -6,9 +6,15 @@ import (
 	tea "charm.land/bubbletea/v2"
 )
 
+type view int
+
+const (
+	selectView view = iota
+	confirmView
+)
+
 type model struct {
-	screen    string
-	altscreen bool
+	currentView view
 
 	selectCursor int
 
@@ -19,9 +25,8 @@ type model struct {
 	confirmed bool
 }
 
-func (m *model) setScreen(name string) {
-	m.screen = name
-	m.altscreen = !(m.screen == "")
+func (m *model) setScreen(v view) {
+	m.currentView = v
 }
 
 func (m *model) updateFilterList() {
@@ -49,7 +54,7 @@ func initialModel() model {
 		filterList:   make([]*group, 0, len(groups)),
 	}
 
-	m.setScreen("select")
+	m.setScreen(selectView)
 	m.updateFilterList()
 
 	return m
