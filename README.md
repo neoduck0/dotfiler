@@ -6,7 +6,7 @@ Directories are never symlinked.
 
 To track a new set of files
 1. Add a folder to the content directory.
-2. Add mapping entry to mappings.conf accordingly
+2. Add mapping entry to `content/mappings.conf` accordingly
 
 A mapping entry must exist within a group.
 A group's name is wrapped within `[]`.
@@ -15,7 +15,6 @@ All mapping related to the group should follow it.
 To run, do `go build -o dotfiler ./src; ./dotfiler`
 
 ## Todos
-- Colorize ouput
 - Show 10 entries at once at max
 - Seperate program from my dotfiles
 - Allow choosing to copy or to symlink
