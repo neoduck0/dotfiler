@@ -18,7 +18,7 @@ var (
 func main() {
 	cdCwd()
 
-	readMappings("src/mappings.conf")
+	readMappings("content/mappings.conf")
 	flag.Parse()
 
 	p := tea.NewProgram(initialModel())
