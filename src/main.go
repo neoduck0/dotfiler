@@ -16,7 +16,7 @@ var (
 )
 
 func main() {
-	cdCwd()
+	goToRoot()
 
 	readMappings("content/mappings.conf")
 	flag.Parse()
@@ -43,7 +43,7 @@ func main() {
 	}
 }
 
-func cdCwd() {
+func goToRoot() {
 	wd, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
