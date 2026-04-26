@@ -3,6 +3,7 @@ package main
 import (
 	"strings"
 
+	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
 )
 
@@ -18,9 +19,8 @@ type model struct {
 
 	selectCursor int
 
-	filterText string
-	filterMode bool
-	filterList []*group
+	filterInput textinput.Model
+	filterList  []*group
 
 	confirmed bool
 }
@@ -28,7 +28,7 @@ type model struct {
 func (m *model) updateFilterList() {
 	m.filterList = m.filterList[:0]
 
-	if m.filterText == "" {
+	if m.filterInput.Value() == "" {
 		for i := range groups {
 			m.filterList = append(m.filterList, &groups[i])
 		}
@@ -36,7 +36,7 @@ func (m *model) updateFilterList() {
 	}
 
 	for i := range groups {
-		if strings.Contains(groups[i].name, m.filterText) {
+		if strings.Contains(groups[i].name, m.filterInput.Value()) {
 			m.filterList = append(m.filterList, &groups[i])
 		}
 	}
@@ -46,10 +46,11 @@ func initialModel() *model {
 	m := model{
 		currentView:  selectView,
 		selectCursor: 0,
-		filterText:   "",
-		filterMode:   false,
+		filterInput:  textinput.New(),
 		filterList:   make([]*group, 0, len(groups)),
 	}
+
+	m.filterInput.Prompt = ""
 
 	m.updateFilterList()
 

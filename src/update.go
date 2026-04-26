@@ -18,7 +18,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	default:
 		switch m.currentView {
 		case selectView:
-			teaCmd = m.selectUpdate(msgStr)
+			teaCmd = m.selectUpdate(msg)
 
 		case confirmView:
 			teaCmd = m.confirmUpdate(msgStr)
@@ -28,35 +28,34 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, teaCmd
 }
 
-func (m *model) selectUpdate(key string) tea.Cmd {
+func (m *model) selectUpdate(msg tea.Msg) tea.Cmd {
+	key := msg.(tea.KeyPressMsg).String()
 	switch key {
 	case "tab":
-		m.filterMode = !m.filterMode
+		if m.filterInput.Focused() {
+			m.filterInput.Blur()
+		} else {
+			m.filterInput.Focus()
+		}
 		return nil
 
 	case "/":
-		m.filterMode = true
+		m.filterInput.Focus()
 		return nil
 
 	case "esc":
-		m.filterMode = false
+		m.filterInput.Blur()
 		return nil
 
 	case "enter":
-		if m.filterMode {
-			m.filterMode = false
+		if m.filterInput.Focused() {
+			m.filterInput.Blur()
 			return nil
 		}
 	}
 
-	if m.filterMode {
-		if key == "backspace" && len(m.filterText) >= 1 {
-			m.filterText = m.filterText[0 : len(m.filterText)-1]
-		} else if len(key) == 1 && key[0] < 128 {
-			m.filterText += key
-		} else if key == "space" {
-			m.filterText += " "
-		}
+	if m.filterInput.Focused() {
+		m.filterInput, _ = m.filterInput.Update(msg)
 
 		m.updateFilterList()
 		if m.selectCursor >= len(m.filterList) &&

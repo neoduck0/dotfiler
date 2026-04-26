@@ -27,16 +27,16 @@ func (m *model) View() tea.View {
 }
 
 func (m *model) selectView(s *strings.Builder) {
-	if m.filterMode {
+	if m.filterInput.Focused() {
 		s.WriteString(renderStyle(selectedStyle, "Filter: "))
 	} else {
 		s.WriteString("Filter: ")
 	}
-	s.WriteString(m.filterText + "\n")
+	s.WriteString(m.filterInput.View() + "\n")
 
 	for i, g := range m.filterList {
 		cursor := " "
-		if !m.filterMode {
+		if !m.filterInput.Focused() {
 			if m.selectCursor == i {
 				cursor = ">"
 			}
@@ -49,7 +49,7 @@ func (m *model) selectView(s *strings.Builder) {
 
 		line := fmt.Sprintf("%s [%s] %s\n", cursor, checked, g.name)
 
-		if m.selectCursor == i && !m.filterMode {
+		if m.selectCursor == i && !m.filterInput.Focused() {
 			line = renderStyle(selectedStyle, line)
 		}
 
