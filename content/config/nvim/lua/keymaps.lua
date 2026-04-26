@@ -21,7 +21,8 @@ vim.keymap.set("n", "<leader>fd", function() Snacks.picker.diagnostics_buffer() 
 vim.keymap.set("n", "<leader>ff", function() Snacks.picker.files() end)
 vim.keymap.set("n", "<leader>fh", function() Snacks.picker.help() end)
 vim.keymap.set("n", "<leader>fp", function() Snacks.picker.projects() end)
-vim.keymap.set("n", "<leader>fg", function() Snacks.picker.git_status() end)
+vim.keymap.set("n", "<leader>fg", function() Snacks.picker.git_diff() end)
+vim.keymap.set("n", "<leader>fG", function() Snacks.picker.git_status() end)
 
 
 vim.keymap.set('n', '[c', function() require("gitsigns").nav_hunk('prev') end)
