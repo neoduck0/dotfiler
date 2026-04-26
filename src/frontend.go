@@ -25,10 +25,6 @@ type model struct {
 	confirmed bool
 }
 
-func (m *model) setScreen(v view) {
-	m.currentView = v
-}
-
 func (m *model) updateFilterList() {
 	m.filterList = m.filterList[:0]
 
@@ -48,13 +44,13 @@ func (m *model) updateFilterList() {
 
 func initialModel() *model {
 	m := model{
+		currentView:  selectView,
 		selectCursor: 0,
 		filterText:   "",
 		filterMode:   false,
 		filterList:   make([]*group, 0, len(groups)),
 	}
 
-	m.setScreen(selectView)
 	m.updateFilterList()
 
 	return &m

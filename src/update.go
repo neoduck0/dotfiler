@@ -103,7 +103,7 @@ func (m *model) selectUpdate(key string) tea.Cmd {
 		group.selected = !group.selected
 
 	case "enter":
-		m.setScreen(confirmView)
+		m.currentView = confirmView
 
 	case "q":
 		return tea.Quit
@@ -118,7 +118,7 @@ func (m *model) confirmUpdate(key string) tea.Cmd {
 		m.confirmed = true
 		return tea.Quit
 	case "n", "N":
-		m.setScreen(selectView)
+		m.currentView = selectView
 	}
 
 	return nil
