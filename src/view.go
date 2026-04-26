@@ -8,7 +8,7 @@ import (
 	"charm.land/lipgloss/v2"
 )
 
-func (m model) View() tea.View {
+func (m *model) View() tea.View {
 	var s strings.Builder
 
 	header := renderStyle(titleStyle, "Dotfiler")
@@ -26,7 +26,7 @@ func (m model) View() tea.View {
 	return teaView
 }
 
-func (m model) selectView(s *strings.Builder) {
+func (m *model) selectView(s *strings.Builder) {
 	if m.filterMode {
 		s.WriteString(renderStyle(selectedStyle, "Filter: "))
 	} else {
@@ -57,7 +57,7 @@ func (m model) selectView(s *strings.Builder) {
 	}
 }
 
-func (m model) confirmView(s *strings.Builder) {
+func (m *model) confirmView(s *strings.Builder) {
 	s.WriteString("Proceed with installation? [Y/n]\n")
 }
 

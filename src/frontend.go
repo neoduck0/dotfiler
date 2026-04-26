@@ -46,7 +46,7 @@ func (m *model) updateFilterList() {
 	}
 }
 
-func initialModel() model {
+func initialModel() *model {
 	m := model{
 		selectCursor: 0,
 		filterText:   "",
@@ -57,9 +57,9 @@ func initialModel() model {
 	m.setScreen(selectView)
 	m.updateFilterList()
 
-	return m
+	return &m
 }
 
-func (m model) Init() tea.Cmd {
+func (m *model) Init() tea.Cmd {
 	return nil
 }

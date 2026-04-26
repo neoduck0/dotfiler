@@ -20,14 +20,14 @@ type mapping struct {
 	dest string
 }
 
-func (g group) install() {
+func (g *group) install() {
 	fmt.Println("Info: Symlinking " + g.name + " group")
 	for _, m := range g.mappings {
 		m.createSymlink()
 	}
 }
 
-func (m mapping) createSymlink() {
+func (m *mapping) createSymlink() {
 	fileInfo, err := os.Stat(m.src)
 	if err != nil {
 		log.Fatal(err)

@@ -28,7 +28,7 @@ func main() {
 	}
 
 	switch m := m.(type) {
-	case model:
+	case *model:
 		if !m.confirmed {
 			fmt.Println("Info: Gracefully quiting")
 			return

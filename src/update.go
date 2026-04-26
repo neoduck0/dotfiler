@@ -4,7 +4,7 @@ import (
 	tea "charm.land/bubbletea/v2"
 )
 
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	msgKeyPress, ok := msg.(tea.KeyPressMsg)
 	if !ok {
 		return m, nil
