@@ -15,10 +15,11 @@ All mapping related to the group should follow it.
 To run, do `go run ./...`
 
 ## Todos
+- Modularize to standard go project structure
 - Show 10 entries at once at max
 - Seperate program from my dotfiles
 - Allow choosing to copy or to symlink
-- Port to bubbles as much as possible
+- (Port to bubbles? Write own component library?)
 - (Maybe make the mappings file json?)
 
 ## Known Issues
