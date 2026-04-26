@@ -79,6 +79,10 @@ func (m *model) selectUpdate(key string) tea.Cmd {
 		}
 
 	case "a":
+		if !(len(m.filterList) > 0) {
+			return nil
+		}
+
 		toggleOn := false
 		if !m.filterList[0].selected {
 			toggleOn = true
