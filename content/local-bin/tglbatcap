@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [ $EUID -ne 0 ]; then
+    pkexec "$0" "$@"
+    exit $?
+fi
+
 file="/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode"
 
 if [ ! -f $file ]; then
@@ -7,7 +12,7 @@ if [ ! -f $file ]; then
     exit 1
 fi
 
-if [ $(sudo cat $file) -eq 0 ]; then
+if [ $(cat $file) -eq 0 ]; then
     old_status=disabled
     new_mode=1
 else
@@ -15,9 +20,9 @@ else
     new_mode=0
 fi
 
-echo $new_mode | sudo tee $file > /dev/null
+echo $new_mode | tee $file >/dev/null
 
-if [ $(sudo cat $file) -eq 0 ]; then
+if [ $(cat $file) -eq 0 ]; then
     new_status=disabled
 else
     new_status=enabled
