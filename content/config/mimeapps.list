@@ -1,7 +1,7 @@
 [Default Applications]
 image/png=org.gnome.Loupe.desktop
 video/x-matroska=mpv.desktop
-application/pdf=org.gnome.Papers.desktop
+application/pdf=helium.desktop
 video/mp4=mpv.desktop
 audio/mp4=io.bassi.Amberol.desktop
 inode/directory=org.gnome.Nautilus.desktop
@@ -19,7 +19,7 @@ application/vnd.efi.iso=gnome-disk-image-writer.desktop
 [Added Associations]
 image/png=org.gnome.Loupe.desktop;
 video/x-matroska=mpv.desktop;
-application/pdf=org.gnome.Papers.desktop;
+application/pdf=helium.desktop;
 video/mp4=mpv.desktop;
 audio/mp4=io.bassi.Amberol.desktop;
 x-scheme-handler/http=firefox.desktop;
