@@ -16,9 +16,9 @@ func (m *model) View() tea.View {
 
 	switch m.currentView {
 	case selectView:
-		m.selectView(&s)
+		m.viewSelect(&s)
 	case confirmView:
-		m.confirmView(&s)
+		m.viewConfirm(&s)
 	}
 
 	teaView := tea.NewView(s.String())
@@ -26,7 +26,7 @@ func (m *model) View() tea.View {
 	return teaView
 }
 
-func (m *model) selectView(s *strings.Builder) {
+func (m *model) viewSelect(s *strings.Builder) {
 	if m.filterInput.Focused() {
 		s.WriteString(renderStyle(selectedStyle, "Filter: "))
 	} else {
@@ -57,7 +57,7 @@ func (m *model) selectView(s *strings.Builder) {
 	}
 }
 
-func (m *model) confirmView(s *strings.Builder) {
+func (m *model) viewConfirm(s *strings.Builder) {
 	s.WriteString("Proceed with installation? [Y/n]\n")
 }
 
