@@ -150,7 +150,8 @@
             "warning": 30,
             "critical": 20
         },
-        "interval": 1
+        "interval": 1,
+        "on-click": "tglbatcap"
     },
     "wireplumber": {
         "format": "{volume}% {icon}",

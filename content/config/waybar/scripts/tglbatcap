@@ -13,19 +13,19 @@ if [ ! -f $file ]; then
 fi
 
 if [ $(cat $file) -eq 0 ]; then
-    old_status=disabled
     new_mode=1
 else
-    old_status=enabled
     new_mode=0
 fi
 
 echo $new_mode | tee $file >/dev/null
 
 if [ $(cat $file) -eq 0 ]; then
-    new_status=disabled
+    message=Disabled
 else
-    new_status=enabled
+    message=Enabled
 fi
 
-echo "$old_status -> $new_status"
+REAL_USER=${PKEXEC_UID:-$USER}
+USER_ID=$(id -u "$REAL_USER")
+su "$REAL_USER" -c "DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USER_ID/bus notify-send 'Battery Cap' '$message'"
