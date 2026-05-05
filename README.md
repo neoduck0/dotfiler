@@ -21,6 +21,7 @@ To run, do `go run ./...`
 - Allow choosing to copy or to symlink
 - (Port to bubbles? Write own component library?)
 - (Maybe make the mappings file json?)
+- Track symlinked files to maybe check for broken symlinks
 
 ## Known Issues
 - If the destination of a mapping contains a broken symlink in its path,
