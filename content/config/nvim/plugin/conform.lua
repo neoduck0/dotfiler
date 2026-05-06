@@ -11,6 +11,8 @@ require("conform").setup({
         python = { "ruff" },
         sh = { "shfmt" },
         html = { lsp_format = "first" },
+        css = { lsp_format = "first" },
+        javascript = { lsp_format = "first" },
     },
     format_on_save = {
         timeout_ms = 500,
