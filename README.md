@@ -1,5 +1,8 @@
 # Dotfiler
 This is my personal dotfiles manager written in go.
+The end goal to write an all in one machine configuration manager
+that can be reused by other people.
+It should be simple to get started with and also allow advanced stuff.
 
 Only files inside the `content` directory will be symlinked.
 Directories are never symlinked.
@@ -15,16 +18,21 @@ All mapping related to the group should follow it.
 To run, do `go run ./...`
 
 ## Todos
-- Modularize to standard go project structure
-- Show 10 entries at once at max
-- Seperate program from my dotfiles
+- Rewrite the mappings file into json
+- Seperate program from dotfiles
+    - Use a `.dotfiler` folder inside the dotfiles directory
 - Allow choosing to copy or to symlink
-- (Port to bubbles? Write own component library?)
-- (Maybe make the mappings file json?)
-- Track symlinked files to maybe check for broken symlinks
+    - A `op` key for entries that can have value of either `copy` or `link`.
+- Add a logs screen
+- Show 10 entries at once at max
 
-## Known Issues
-- If the destination of a mapping contains a broken symlink in its path,
-recursive folder creation fails.
-- Untested edge case if a filename ends or starts with empty space,
-`strings.Trim` might badly interfere.
+## Technical Improvements
+- Make each screen a unique struct and add a new interface
+
+## Known/Potential Issues
+- Inability to create destination if dest path contains broken symlink dir
+    - While e
+- `strings.Trim` might badly interfere with files that end or start with spaces
+    - Will be fixed with new mappings json implementation
+- Leaves around broken symlinks if source file is removed
+    - Manage all symlinks created by the program
