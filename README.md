@@ -18,6 +18,7 @@ All mapping related to the group should follow it.
 To run, do `go run ./...`
 
 ## Todos
+- Port to new hestia repository
 - Rewrite the mappings file into json
 - Seperate program from dotfiles
     - Use a `.dotfiler` folder inside the dotfiles directory
