@@ -1,10 +1,12 @@
 {
+    "workbench.colorTheme": "Min Dark",
     "telemetry.feedback.enabled": false,
-    "telemetry.telemetryLevel": "off",
     "telemetry.editStats.enabled": false,
-    "workbench.startupEditor": "none",
     "window.controlsStyle": "hidden",
-    "workbench.colorTheme": "Tokyo Night",
+    "telemetry.telemetryLevel": "off",
+    "editor.minimap.enabled": false,
+    "workbench.startupEditor": "none",
     "editor.lineNumbers": "relative",
+    "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
     "explorer.confirmDelete": false
 }
