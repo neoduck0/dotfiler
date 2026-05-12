@@ -72,7 +72,7 @@ FLATPAKS = [
     "dev.vencord.Vesktop",
 ]
 
-AUR = ["helium-browser-bin", "yay"]
+AUR = ["code-marketplace", "helium-browser-bin", "yay"]
 
 BASIC = [
     "ascii",
@@ -150,17 +150,14 @@ DESKTOP = [
     "android-tools",
     "bluez",
     "bluez-utils",
-    "obs-studio",
-    "shotcut",
-    "calf",
     "code",
     "deluge-gtk",
     "dmidecode",
     "dnsmasq",
     "drawio-desktop",
     "eartag",
-    "easyeffects",
     "ffmpeg",
+    "firefox",
     "flatpak",
     "flatseal",
     "gnome-calculator",
@@ -180,9 +177,9 @@ DESKTOP = [
     "noto-fonts-cjk",
     "noto-fonts-emoji",
     "noto-fonts-extra",
+    "obs-studio",
     "obsidian",
     "okular",
-    "firefox",
     "ollama",
     "ollama-vulkan",
     "opencode",
@@ -198,6 +195,7 @@ DESKTOP = [
     "qemu-full",
     "scrcpy",
     "seahorse",
+    "shotcut",
     "snapshot",
     "sof-firmware",
     "solanum",
