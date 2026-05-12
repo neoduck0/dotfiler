@@ -2,17 +2,139 @@
     highlight: bold italic;
     scrollbar: true;
 
-    everforest-bg:           #232A2E;
-    everforest-bg1:          #2D353B;
-    everforest-bg2:          #343F44;
-    everforest-fg:           #D3C6AA;
-    everforest-red:          #E67E80;
-    everforest-green:        #A7C080;
-    everforest-yellow:       #DBBC7F;
-    everforest-orange:       #E69875;
-    everforest-blue:         #7FBBB3;
-    everforest-magenta:      #D699B6;
-    everforest-cyan:         #83C092;
+    bg:      #1e1e1e;
+    bg1:     #2d2d2d;
+    bg2:     #3c3c3c;
+    fg:      #e0e0e0;
+    red:     #d0d0d0;
+    green:   #b0b0b0;
+    yellow:  #c0c0c0;
+    orange:  #c8c8c8;
+    blue:    #a0a0a0;
+    magenta: #a0a0a0;
+    cyan:    #a0a0a0;
 }
 
-@import "common"
+window {
+    background-color: @bg;
+    border-color:     @fg;
+    border:           2;
+    padding:          2;
+    width:            500;
+    font:             "JetBrainsMono Nerd Font Mono 12";
+}
+
+mainbox {
+    border:  0;
+    padding: 0;
+}
+
+message {
+    border:       2px 0 0;
+    border-color: @fg;
+    padding:      1px;
+}
+
+textbox {
+    highlight:  @highlight;
+    text-color: @fg;
+}
+
+listview {
+    border:       2px solid 0 0;
+    padding:      2px 0 0;
+    border-color: @fg;
+    spacing:      2px;
+}
+
+scrollbar {
+    handle-color: @fg;
+}
+
+element {
+    border:  0;
+    padding: 2px;
+}
+
+element.normal.normal {
+    background-color: @bg;
+    text-color:       @fg;
+}
+
+element.normal.urgent {
+    background-color: @red;
+    text-color:       @bg;
+}
+
+element.normal.active {
+    background-color: @green;
+    text-color:       @bg;
+}
+
+element.selected.normal {
+    background-color: @bg2;
+    text-color:       @orange;
+}
+
+element.selected.urgent {
+    background-color: @red;
+    text-color:       @bg;
+}
+
+element.selected.active {
+    background-color: @green;
+    text-color:       @bg;
+}
+
+element.alternate.normal {
+    background-color: @bg;
+    text-color:       @fg;
+}
+
+element.alternate.urgent {
+    background-color: @red;
+    text-color:       @bg;
+}
+
+element.alternate.active {
+    background-color: @green;
+    text-color:       @bg;
+}
+
+mode-switcher {
+    border:       2px 0 0;
+    border-color: @fg;
+}
+
+inputbar {
+    spacing:    0;
+    text-color: @fg;
+    padding:    2px;
+    children:   [ prompt, textbox-prompt-sep, entry, case-indicator ];
+}
+
+case-indicator, entry, prompt, button {
+    spacing:    0;
+    text-color: @fg;
+}
+
+entry {
+    placeholder: "";
+}
+
+button.selected {
+    background-color: @bg2;
+    text-color:       @orange;
+}
+
+textbox-prompt-sep {
+    expand:     false;
+    str:        ":";
+    text-color: @fg;
+    margin:     0 0.3em 0 0;
+}
+
+element-text, element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+}
