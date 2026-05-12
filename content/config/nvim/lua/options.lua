@@ -23,3 +23,6 @@ vim.o.spelllang = "en_us"
 vim.o.smoothscroll = true
 
 vim.o.colorcolumn = "80"
+
+vim.opt.list = true
+vim.opt.listchars = { tab = '··', trail = '·', space = '·' }

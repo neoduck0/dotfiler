@@ -17,5 +17,9 @@ require("snacks").setup({
         },
     },
     scroll = { enabled = true },
-    notifier = { enabled = true }
+    notifier = { enabled = true },
+    indent = {
+        enabled = true,
+        only_scope = false,
+    },
 })
