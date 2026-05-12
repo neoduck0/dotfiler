@@ -19,6 +19,7 @@
     background: none;
     transition: none;
     box-shadow: none;
+    border: none;
 }
 
 #workspaces button {
