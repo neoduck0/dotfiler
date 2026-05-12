@@ -7,7 +7,6 @@
     "modules-left": [
         "hyprland/workspaces",
         "custom/drepos",
-        "custom/pcheck",
         "wlr/taskbar",
         "hyprland/submap"
     ],
@@ -43,12 +42,6 @@
         "return-type": "json",
         "format": "{text}"
     },
-    "custom/pcheck": {
-        "exec": "pcheck waybar",
-        "interval": 60,
-        "return-type": "json",
-        "format": "{text}"
-    },
     "wlr/taskbar": {
         "format": "{icon}",
         "icon-size": 12,
@@ -63,12 +56,6 @@
         "format": "{:%a %d/%m %H:%M:%S}",
         "tooltip": false,
         "interval": 1
-    },
-    "custom/prayers": {
-        "exec": "prayers waybar",
-        "interval": 60,
-        "return-type": "text",
-        "format": "({})"
     },
     "tray": {
         "icon-size": 12
