@@ -2,22 +2,22 @@
     highlight: bold italic;
     scrollbar: true;
 
-    bg:      #1e1e1e;
-    bg1:     #2d2d2d;
-    bg2:     #3c3c3c;
-    fg:      #e0e0e0;
-    red:     #d0d0d0;
-    green:   #b0b0b0;
-    yellow:  #c0c0c0;
-    orange:  #c8c8c8;
-    blue:    #a0a0a0;
-    magenta: #a0a0a0;
-    cyan:    #a0a0a0;
+    bg:      #000000;
+    bg-sel:  #0a0a0a;
+    border:  #333333;
+    fg:      #C1C1C1;
+    red:     #f97583;
+    green:   #7CB342;
+    yellow:  #ffab70;
+    orange:  #79b8ff;
+    blue:    #79b8ff;
+    magenta: #b392f0;
+    cyan:    #4db8b8;
 }
 
 window {
     background-color: @bg;
-    border-color:     @fg;
+    border-color:     @border;
     border:           2;
     padding:          2;
     width:            500;
@@ -31,7 +31,7 @@ mainbox {
 
 message {
     border:       2px 0 0;
-    border-color: @fg;
+    border-color: @border;
     padding:      1px;
 }
 
@@ -43,12 +43,12 @@ textbox {
 listview {
     border:       2px solid 0 0;
     padding:      2px 0 0;
-    border-color: @fg;
+    border-color: @border;
     spacing:      2px;
 }
 
 scrollbar {
-    handle-color: @fg;
+    handle-color: @border;
 }
 
 element {
@@ -72,7 +72,7 @@ element.normal.active {
 }
 
 element.selected.normal {
-    background-color: @bg2;
+    background-color: @bg-sel;
     text-color:       @orange;
 }
 
@@ -103,7 +103,7 @@ element.alternate.active {
 
 mode-switcher {
     border:       2px 0 0;
-    border-color: @fg;
+    border-color: @border;
 }
 
 inputbar {
@@ -123,7 +123,7 @@ entry {
 }
 
 button.selected {
-    background-color: @bg2;
+    background-color: @bg-sel;
     text-color:       @orange;
 }
 
