@@ -29,10 +29,19 @@
         "custom/power"
     ],
     "hyprland/workspaces": {
-        "format": "{icon}",
+        "format": "{name}:{icon}",
         "format-icons": {
-            "urgent": "",
-            "active": "",
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+
+            "7": "",
+            "8": "󰎁",
+            "9": "",
+
+            "10": "󰡁",
+
             "default": ""
         }
     },
