@@ -1,5 +1,4 @@
 {
-    "workbench.colorTheme": "Min Dark",
     "telemetry.feedback.enabled": false,
     "telemetry.editStats.enabled": false,
     "window.controlsStyle": "hidden",
@@ -8,5 +7,6 @@
     "workbench.startupEditor": "none",
     "editor.lineNumbers": "relative",
     "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
-    "explorer.confirmDelete": false
+    "explorer.confirmDelete": false,
+    "workbench.colorTheme": "Dark Modern"
 }
