@@ -76,7 +76,8 @@
         },
         "status-icons": {
             "paused": ""
-        }
+        },
+        "title-len": 30
     },
     "tray": {
         "icon-size": 12
