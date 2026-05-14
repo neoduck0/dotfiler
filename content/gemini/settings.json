@@ -1,0 +1,18 @@
+{
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "ui": {
+    "theme": "ANSI",
+    "inlineThinkingMode": "full"
+  },
+  "general": {
+    "vimMode": true,
+    "enableAutoUpdate": false
+  },
+  "telemetry": {
+    "enabled": false
+  }
+}
