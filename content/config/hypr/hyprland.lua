@@ -23,6 +23,7 @@ hl.monitor({
 local terminal = "kitty"
 local menu = "rofi -show-icons -show drun"
 local file_manager = "nautilus --new-window"
+local browser = "firefox"
 
 -----------------
 --- AUTOSTART ---
@@ -218,7 +219,8 @@ hl.bind(mainMod .. " + space", hl.dsp.exec_cmd("playerctl play-pause"),
     { locked = true, repeating = true })
 
 hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + n", hl.dsp.exec_cmd(file_manager))
+hl.bind(mainMod .. " + period", hl.dsp.exec_cmd(file_manager))
+hl.bind(mainMod .. " + slash", hl.dsp.exec_cmd(browser))
 
 -- Submaps
 hl.bind(mainMod .. " + grave", hl.dsp.submap("Control"))
