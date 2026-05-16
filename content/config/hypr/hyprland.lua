@@ -226,14 +226,10 @@ hl.bind(mainMod .. " + slash", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + grave", hl.dsp.submap("Control"))
 hl.define_submap("Control", function()
     hl.bind("escape", hl.dsp.submap("reset"))
-    hl.bind("w", hl.dsp.exec_cmd("rfkill toggle wifi"))
-    hl.bind("d", hl.dsp.dpms({ action = "toggle", monitor = "HDMI-A-1" }))
-    hl.bind("SHIFT + d", hl.dsp.dpms({ action = "toggle", monitor = "eDP-1" }))
     hl.bind("h", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-"),
         { locked = true, repeating = true })
     hl.bind("SHIFT + h", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%-"),
-        { locked = true, repeating = true }
-    )
+        { locked = true, repeating = true })
     hl.bind("j", hl.dsp.exec_cmd("brightnessctl s 5%-"),
         { locked = true, repeating = true })
     hl.bind("SHIFT + j", hl.dsp.exec_cmd("brightnessctl s 10%-"),
@@ -246,8 +242,6 @@ hl.define_submap("Control", function()
         { locked = true, repeating = true })
     hl.bind("SHIFT + l", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 10%+"),
         { locked = true, repeating = true })
-    hl.bind("b", hl.dsp.exec_cmd("tglbluetooth"))
-    hl.bind("m", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
 end)
 
 
