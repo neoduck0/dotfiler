@@ -20,7 +20,7 @@
     border-radius: 0;
     border: 0;
     box-shadow: none;
-    padding: 0px 10px;
+    padding: 0px 2px;
     transition: none;
 }
 
@@ -32,11 +32,11 @@
 }
 
 #workspaces button.urgent {
-    box-shadow: inset 0px -5px 0px 0px #FF7A84;
+    box-shadow: inset 0px -3px 0px 0px #FF7A84;
 }
 
 #workspaces button.active {
-    box-shadow: inset 0px 5px 0px 0px #C1C1C1;
+    box-shadow: inset 0px -3px 0px 0px #C1C1C1;
 }
 
 #power-profiles-daemon.performance {

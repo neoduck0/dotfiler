@@ -30,22 +30,7 @@
         "custom/power"
     ],
     "hyprland/workspaces": {
-        "format": "{name}:{icon}",
-        "format-icons": {
-            "1": "",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "6": "",
-            "7": "",
-            "8": "󰎁",
-            "9": "",
-
-            "10": "󰡁",
-
-            "default": ""
-        }
+        "format": "{name}"
     },
     "custom/drepos": {
         "exec": "drepos waybar",
@@ -180,7 +165,6 @@
         "format-connected": "{device_battery_percentage}% ",
         "format-no-controller": "",
         "tooltip-format-connected": "{device_alias}"
-        // "on-click": "rfkill toggle bluetooth"
     },
     "network": {
         "format": "",
@@ -188,7 +172,6 @@
         "format-ethernet": "",
         "format-wifi": "{signalStrength}% ",
         "tooltip-format": "{essid}",
-        // "on-click": "rfkill toggle wifi",
         "interval": 10
     },
     "custom/power": {
