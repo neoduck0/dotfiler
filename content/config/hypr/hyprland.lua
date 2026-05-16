@@ -144,8 +144,8 @@ for i = 1, 5 do
     hl.bind(mainMod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
 end
 
-hl.bind(mainMod .. " + period", hl.dsp.workspace.toggle_special("background"))
-hl.bind(mainMod .. " + SHIFT + period", hl.dsp.window.move({ workspace = "special:background" }))
+hl.bind(mainMod .. " + 0", hl.dsp.workspace.toggle_special("background"))
+hl.bind(mainMod .. " + SHIFT + 0", hl.dsp.window.move({ workspace = "special:background" }))
 
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 
