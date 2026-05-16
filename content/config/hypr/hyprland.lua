@@ -212,7 +212,6 @@ hl.bind(mainMod .. " + delete", hl.dsp.exec_cmd("hyprlock"))
 
 hl.bind(mainMod .. " + o", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + v", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
-hl.bind(mainMod .. " + c", hl.dsp.submap("Control"))
 hl.bind(mainMod .. " + e", hl.dsp.exec_cmd("rofi -modi emoji -show emoji"))
 
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd("playerctl play-pause"),
@@ -222,6 +221,7 @@ hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + n", hl.dsp.exec_cmd(file_manager))
 
 -- Submaps
+hl.bind(mainMod .. " + grave", hl.dsp.submap("Control"))
 hl.define_submap("Control", function()
     hl.bind("escape", hl.dsp.submap("reset"))
     hl.bind("w", hl.dsp.exec_cmd("rfkill toggle wifi"))
